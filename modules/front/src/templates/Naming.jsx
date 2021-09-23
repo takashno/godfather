@@ -74,18 +74,35 @@ const Home = (props) => {
 
     return (
         <React.Fragment>
-            <nav class="uk-navbar-container uk-margin">
+            <nav class="uk-navbar-container uk-navbar uk-margin">
                 <div class="uk-navbar-left">
                     <a class="uk-navbar-item uk-logo" href="/"><strong>Godfather</strong></a>
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active">
+                            <a href="#">Naming</a>
+                        </li>
+                        <li>
+                            <a href="#">Library</a>
+                        </li>
+                    </ul>
                 </div>
-
+                <div class="uk-navbar-right">
+                    <ul class="uk-navbar-nav">
+                        <li>
+                            <a href="#">
+                                <span class="uk-icon uk-margin-small-right" uk-icon="icon: settings"></span>
+                                Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
             <div class="uk-container">
                 <u><i><h2>Naming</h2></i></u>
                 <div class="uk-grid">
                     <div class="uk-with-1-1">
                         <p>
-                            とても簡易的なネーミングツールです.<br/>
+                            とても簡易的なネーミングツールです.<br />
                             命名対象のワードを&nbsp;<strong>Target</strong>&nbsp;へ入力すると、辞書に登録されている情報に基づいて変換した結果を&nbsp;<strong>Result</strong>&nbsp;へ表示します.
                         </p>
                     </div>
