@@ -24,7 +24,23 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Godfather</title>
+    <!-- UIKit - start -->
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.3/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.3/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.3/dist/js/uikit-icons.min.js"></script>
+    <!-- UIKit - end -->
+    <script>
+      UIkit.on('afterready.uk.dom', function() {
+ var accordion = UIkit.accordion(UIkit.$('#hoge'), {collapse:false, showfirst: false});
+ accordion.find('[data-wrapper]').each(function () {
+     accordion.toggleItem(UIkit.$(this), true, false); // animated true and collapse false
+  });
+});
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

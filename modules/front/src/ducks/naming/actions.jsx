@@ -1,15 +1,21 @@
-export const NAMING = "NAMING"
-export const SETTING = "SETTING"
+export const NAMING = "NAMING";
+export const SETTING = "SETTING";
 
 /**
- * 命名アクション.
+ * ネーミングアクション.
  * @param {*} target 
  * @returns 
  */
-export const naming = (target) => {
+export const naming = (target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase) => {
     return {
-      type: NAMING,
-      target: target
+        type: NAMING,
+        payload: {
+            target: target,
+            lowerCamelCase: lowerCamelCase,
+            lowerSnakeCase: lowerSnakeCase,
+            upperCamelCase: upperCamelCase,
+            upperSnakeCase: upperSnakeCase
+        }
     };
 };
 
@@ -23,10 +29,12 @@ export const naming = (target) => {
  */
 export const setting = (lowerCamelCase, lowerSnakelCase, upperCamelCase, upperSnakelCase) => {
     return {
-      type: SETTING,
-      lowerCamelCase: lowerCamelCase,
-      lowerSnakelCase: lowerSnakelCase,
-      upperCamelCase: upperCamelCase,
-      upperSnakelCase: upperSnakelCase
+        type: SETTING,
+        payload: {
+            lowerCamelCase: lowerCamelCase,
+            lowerSnakelCase: lowerSnakelCase,
+            upperCamelCase: upperCamelCase,
+            upperSnakelCase: upperSnakelCase
+        }
     };
 };
