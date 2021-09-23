@@ -1,0 +1,25 @@
+words:
+  - word: "あいうえお"
+    converteds: 
+    - locale: "en"
+      converted: "aiueo"
+  - word: "かきくけこ"
+    converteds: 
+    - locale: "en"
+      converted: "kakikukeko"     
+  - word: "さしすせそ"
+    converteds: 
+    - locale: "en"
+      converted: "sashisuseso"
+  - word: "あい"
+    converteds: 
+    - locale: "en"
+      converted: "love"
+  - word: "うえ"
+    converteds: 
+    - locale: "en"
+      converted: "up"
+  - word: "お"
+    converteds: 
+    - locale: "en"
+      converted: "tail"      
