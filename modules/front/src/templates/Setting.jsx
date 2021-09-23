@@ -6,7 +6,7 @@ import { naming as namingAction } from '../ducks/naming/actions';
 /**
  * ネーミング機能コンポーネント.
  */
-const Home = (props) => {
+const Setting = (props) => {
 
     const COPY_TOOLTIP = 'コピーします.';
 
@@ -79,7 +79,7 @@ const Home = (props) => {
                 <div class="uk-navbar-left">
                     <a class="uk-navbar-item uk-logo" href="/"><strong>Godfather</strong></a>
                     <ul class="uk-navbar-nav">
-                        <li class="uk-active">
+                        <li >
                             <Link to={`/`}>Naming</Link>
                         </li>
                         <li>
@@ -89,47 +89,28 @@ const Home = (props) => {
                 </div>
                 <div class="uk-navbar-right">
                     <ul class="uk-navbar-nav">
-                        <li>
-                            <Link to={`/setting`}>
+                        <li class="uk-active">
+                            <a href="#">
                                 <span class="uk-icon uk-margin-small-right" uk-icon="icon: settings"></span>
                                 Settings
-                            </Link>
+                            </a>
                         </li>
                     </ul>
                 </div>
             </nav>
             <div class="uk-container">
-                <u><i><h2>Naming</h2></i></u>
+                <u><i><h2>Setting</h2></i></u>
                 <div class="uk-grid">
                     <div class="uk-with-1-1">
                         <p>
-                            命名対象のワードを&nbsp;<strong>Target</strong>&nbsp;へ入力すると、辞書に登録されている情報に基づいて変換した結果を&nbsp;<strong>Result</strong>&nbsp;へ表示します.
+                            ツールの設定を行います.
                         </p>
                     </div>
                 </div>
                 <div class="uk-grid">
-                    <div class="uk-with-1-1">
-                        <h4>
-                            <strong>Options&nbsp;<span uk-icon="question" uk-tooltip="どの形式の出力を行うかのオプションです."></span></strong>
-                        </h4>
-                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                            <label><input id="lowerCamelCase" class="uk-checkbox" type="checkbox" />&nbsp;LowerCamelCase</label>
-                            <label><input id="lowerSnakeCase" class="uk-checkbox" type="checkbox" />&nbsp;LowerSnakeCase</label>
-                            <label><input id="upperCamelCase" class="uk-checkbox" type="checkbox" />&nbsp;UpperCamelCase</label>
-                            <label><input id="upperSnakeCase" class="uk-checkbox" type="checkbox" />&nbsp;UpperSnakeCase</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="uk-grid">
-                    <div class="uk-width-1-1 uk-margin-bottom">
-                        <h4>
-                            <strong>Target&nbsp;<span uk-icon="question" uk-tooltip="対象のワードを記載します.<br/>改行して複数指定可能です.<br/>その場合、１行毎を別の対象と捉えます."></span></strong>
-                        </h4>
-                        <textarea id="target" class="uk-textarea uk-form-width-large" rows="5" onChange={handleChange} />
-                    </div>
                     <div class="uk-width-1-1 ">
                         <h4>
-                            <strong>Naming&nbsp;Result&nbsp;<span uk-icon="question" uk-tooltip="ネーミング結果を表で表します."></span></strong>
+                            <strong>Case&nbsp;Setting&nbsp;<span uk-icon="question" uk-tooltip="ネーミング結果を表で表します."></span></strong>
                         </h4>
                         <div class="uk-overflow-auto">
                             <table class="uk-table uk-table-small uk-table-hover">
@@ -167,4 +148,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Setting);
