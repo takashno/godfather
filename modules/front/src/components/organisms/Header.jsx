@@ -20,10 +20,10 @@ const Header = (props) => {
                 <div class="uk-navbar-right">
                     <ul class="uk-navbar-nav">
                         <li>
-                            <a href="#">
+                            <Link to={`/setting`}>
                                 <span class="uk-icon uk-margin-small-right" uk-icon="icon: settings"></span>
                                 Settings
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

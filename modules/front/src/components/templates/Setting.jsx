@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { naming as namingAction } from '../../ducks/naming/actions';
 import Header from '../organisms/Header'
 

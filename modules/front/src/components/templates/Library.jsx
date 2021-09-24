@@ -8,29 +8,6 @@ import Header from '../organisms/Header'
  */
 const Library = (props) => {
 
-    const COPY_TOOLTIP = 'コピーします.';
-
-    /**
-     * 入力ハンドラ.
-     */
-    const handleChange = (event) => {
-        console.log(event.target.value);
-        console.log('lowerCamelCase : ' + document.querySelector('#lowerCamelCase').value);
-        console.log('lowerSnakeCase : ' + document.querySelector('#lowerSnakeCase').value);
-        console.log('upperCamelCase : ' + document.querySelector('#upperCamelCase').value);
-        console.log('upperSnakeCase : ' + document.querySelector('#upperSnakeCase').value);
-        props.namingAction(
-            event.target.value,
-            document.querySelector('#lowerCamelCase').value,
-            document.querySelector('#lowerSnakeCase').value,
-            document.querySelector('#upperCamelCase').value,
-            document.querySelector('#upperSnakeCase').value);
-    }
-
-    const copyText = (target) => {
-        navigator.clipboard.writeText(document.querySelector('#' + target).innerText);
-    }
-
     const tableHeaderStyle = {
         textTransform: 'none'
     }
@@ -46,24 +23,7 @@ const Library = (props) => {
                     {result.target}
                 </td>
                 <td>
-                    <span id={'lowerCamelCase_' + index}>{result.lowerCamelCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('lowerCamelCase_' + index)}></span>
-                </td>
-                <td>
-                    <span id={'lowerSnakeCase_' + index}>{result.lowerSnakeCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('lowerSnakeCase_' + index)}></span>
-                </td>
-                <td>
-                    <span id={'upperCamelCase_' + index}>{result.upperCamelCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('upperCamelCase_' + index)}></span>
-                </td>
-                <td>
-                    <span id={'upperSnakeCase_' + index}>{result.upperSnakeCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('upperSnakeCase_' + index)}></span>
+                    {result.converted}
                 </td>
             </tr>
         );
@@ -75,30 +35,27 @@ const Library = (props) => {
 
     return (
         <React.Fragment>
-            <Header/>
+            <Header />
             <div class="uk-container">
                 <u><i><h2>Library</h2></i></u>
                 <div class="uk-grid">
                     <div class="uk-with-1-1">
                         <p>
-                            ライブラリに登録されているワードの一覧を確認する機能です.
+                            ライブラリに登録されている各種ワードの一覧を確認する機能です.<br/>
                         </p>
                     </div>
                 </div>
                 <div class="uk-grid">
-                    <div class="uk-width-1-1 ">
+                    <div class="uk-width-1-1">
                         <h4>
-                            <strong>Word&nbsp;List&nbsp;<span uk-icon="question" uk-tooltip="ネーミング結果を表で表します."></span></strong>
+                            <strong>Registed&nbsp;Words&nbsp;<span uk-icon="question" uk-tooltip="辞書として登録されているワードの一覧です."></span></strong>
                         </h4>
                         <div class="uk-overflow-auto">
                             <table class="uk-table uk-table-small uk-table-hover">
                                 <thead>
                                     <tr>
                                         <th style={tableHeaderStyle}>Target Word</th>
-                                        <th style={tableHeaderStyle}>LowerCamelCase</th>
-                                        <th style={tableHeaderStyle}>LowerSnakeCase</th>
-                                        <th style={tableHeaderStyle}>UpperCamelCase</th>
-                                        <th style={tableHeaderStyle}>UpperSnakeCase</th>
+                                        <th style={tableHeaderStyle}>Converted Word</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -106,6 +63,56 @@ const Library = (props) => {
                                 </tbody>
                             </table>
                         </div>
+                        <ul class="uk-pagination" uk-margin>
+                            <li><a href="#"><span uk-pagination-previous></span></a></li>
+                            <li><a href="#">1</a></li>
+                            <li class="uk-disabled"><span>...</span></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">6</a></li>
+                            <li class="uk-active"><span>7</span></li>
+                            <li><a href="#">8</a></li>
+                            <li><a href="#">9</a></li>
+                            <li><a href="#">10</a></li>
+                            <li class="uk-disabled"><span>...</span></li>
+                            <li><a href="#">20</a></li>
+                            <li><a href="#"><span uk-pagination-next></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-1-1">
+                        <h4>
+                            <strong>Reserved&nbsp;Words&nbsp;<span uk-icon="question" uk-tooltip="予約語として登録されているワードの一覧です."></span></strong>
+                        </h4>
+                        <div class="uk-overflow-auto">
+                            <table class="uk-table uk-table-small uk-table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style={tableHeaderStyle}>Reserved Word</th>
+                                        <th style={tableHeaderStyle}>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderTableRow()}
+                                </tbody>
+                            </table>
+                        </div>
+                        <ul class="uk-pagination" uk-margin>
+                            <li><a href="#"><span uk-pagination-previous></span></a></li>
+                            <li><a href="#">1</a></li>
+                            <li class="uk-disabled"><span>...</span></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">6</a></li>
+                            <li class="uk-active"><span>7</span></li>
+                            <li><a href="#">8</a></li>
+                            <li><a href="#">9</a></li>
+                            <li><a href="#">10</a></li>
+                            <li class="uk-disabled"><span>...</span></li>
+                            <li><a href="#">20</a></li>
+                            <li><a href="#"><span uk-pagination-next></span></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
