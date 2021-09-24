@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { naming as namingAction } from '../ducks/naming/actions';
+import { naming as namingAction } from '../../ducks/naming/actions';
+import Header from '../organisms/Header'
 
 /**
  * ネーミング機能コンポーネント.
  */
-const Library = (props) => {
+const Setting = (props) => {
 
     const COPY_TOOLTIP = 'コピーします.';
 
@@ -75,42 +76,20 @@ const Library = (props) => {
 
     return (
         <React.Fragment>
-            <nav class="uk-navbar-container uk-navbar uk-margin">
-                <div class="uk-navbar-left">
-                    <a class="uk-navbar-item uk-logo" href="/"><strong>Godfather</strong></a>
-                    <ul class="uk-navbar-nav">
-                        <li >
-                            <Link to={`/`}>Naming</Link>
-                        </li>
-                        <li class="uk-active">
-                            <Link to={`/library`}>Library</Link>
-                        </li>
-                    </ul>
-                </div>
-                <div class="uk-navbar-right">
-                    <ul class="uk-navbar-nav">
-                        <li>
-                            <a href="#">
-                                <span class="uk-icon uk-margin-small-right" uk-icon="icon: settings"></span>
-                                Settings
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <Header/>
             <div class="uk-container">
-                <u><i><h2>Library</h2></i></u>
+                <u><i><h2>Setting</h2></i></u>
                 <div class="uk-grid">
                     <div class="uk-with-1-1">
                         <p>
-                            ライブラリに登録されているワードの一覧を確認する機能です.
+                            ツールの設定を行います.
                         </p>
                     </div>
                 </div>
                 <div class="uk-grid">
                     <div class="uk-width-1-1 ">
                         <h4>
-                            <strong>Word&nbsp;List&nbsp;<span uk-icon="question" uk-tooltip="ネーミング結果を表で表します."></span></strong>
+                            <strong>Case&nbsp;Setting&nbsp;<span uk-icon="question" uk-tooltip="ネーミング結果を表で表します."></span></strong>
                         </h4>
                         <div class="uk-overflow-auto">
                             <table class="uk-table uk-table-small uk-table-hover">
@@ -148,4 +127,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Library);
+export default connect(mapStateToProps, mapDispatchToProps)(Setting);

@@ -1,8 +1,8 @@
 import React from "react";
 import {Switch, Route} from "react-router";
-import Naming from "./templates/Naming";
-import Library from "./templates/Library";
-import Setting from "./templates/Setting";
+import Naming from "./components/templates/Naming";
+import Library from "./components/templates/Library";
+import Setting from "./components/templates/Setting";
 
 const Router = () => {
     return (
