@@ -22,4 +22,17 @@ words:
   - word: "お"
     converteds: 
     - locale: "en"
-      converted: "tail"      
+      converted: "tail"
+  - word: "アカウント"
+    converteds: 
+    - locale: "en"
+      converted: "account"
+  - word: "Google"
+    converteds: 
+    - locale: "en"
+      converted: "google"
+  - word: "Github"
+    converteds: 
+    - locale: "en"
+      converted: "github"
+        
