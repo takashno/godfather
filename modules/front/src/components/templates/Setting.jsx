@@ -13,19 +13,19 @@ const Setting = (props) => {
     /**
      * 入力ハンドラ.
      */
-    const handleChange = (event) => {
-        console.log(event.target.value);
-        console.log('lowerCamelCase : ' + document.querySelector('#lowerCamelCase').value);
-        console.log('lowerSnakeCase : ' + document.querySelector('#lowerSnakeCase').value);
-        console.log('upperCamelCase : ' + document.querySelector('#upperCamelCase').value);
-        console.log('upperSnakeCase : ' + document.querySelector('#upperSnakeCase').value);
-        props.namingAction(
-            event.target.value,
-            document.querySelector('#lowerCamelCase').value,
-            document.querySelector('#lowerSnakeCase').value,
-            document.querySelector('#upperCamelCase').value,
-            document.querySelector('#upperSnakeCase').value);
-    }
+    // const handleChange = (event) => {
+    //     console.log(event.target.value);
+    //     console.log('lowerCamelCase : ' + document.querySelector('#lowerCamelCase').value);
+    //     console.log('lowerSnakeCase : ' + document.querySelector('#lowerSnakeCase').value);
+    //     console.log('upperCamelCase : ' + document.querySelector('#upperCamelCase').value);
+    //     console.log('upperSnakeCase : ' + document.querySelector('#upperSnakeCase').value);
+    //     props.namingAction(
+    //         event.target.value,
+    //         document.querySelector('#lowerCamelCase').value,
+    //         document.querySelector('#lowerSnakeCase').value,
+    //         document.querySelector('#upperCamelCase').value,
+    //         document.querySelector('#upperSnakeCase').value);
+    // }
 
     const copyText = (target) => {
         navigator.clipboard.writeText(document.querySelector('#' + target).innerText);

@@ -6,15 +6,12 @@ export const SETTING = "SETTING";
  * @param {*} target 
  * @returns 
  */
-export const naming = (target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase) => {
+export const namingAction = (target, results) => {
     return {
         type: NAMING,
         payload: {
             target: target,
-            lowerCamelCase: lowerCamelCase,
-            lowerSnakeCase: lowerSnakeCase,
-            upperCamelCase: upperCamelCase,
-            upperSnakeCase: upperSnakeCase
+            results: results
         }
     };
 };
