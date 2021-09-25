@@ -4,6 +4,7 @@ import {
     combineReducers,
     applyMiddleware
 } from 'redux';
+import thunk from 'redux-thunk';
 import {connectRouter, routerMiddleware} from 'connected-react-router'
 import NamingReducer from '../naming/reducers';
 
@@ -15,7 +16,8 @@ export const createStore = (history) => {
             naming: NamingReducer
         }),
         applyMiddleware(
-            routerMiddleware(history)
+            routerMiddleware(history),
+            thunk
         )
     )
 }

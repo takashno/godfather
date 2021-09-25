@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { naming as namingAction } from '../../ducks/naming/actions';
+import { namingOperation } from '../../ducks/naming/operations';
 import Header from '../organisms/Header'
 
 /**
@@ -19,7 +19,7 @@ const Naming = (props) => {
         console.log('lowerSnakeCase : ' + document.querySelector('#lowerSnakeCase').value);
         console.log('upperCamelCase : ' + document.querySelector('#upperCamelCase').value);
         console.log('upperSnakeCase : ' + document.querySelector('#upperSnakeCase').value);
-        props.namingAction(
+        props.namingOperation(
             event.target.value,
             document.querySelector('#lowerCamelCase').value,
             document.querySelector('#lowerSnakeCase').value,
@@ -35,6 +35,27 @@ const Naming = (props) => {
         textTransform: 'none'
     }
 
+    // 結果セル用
+    const renderTableTd = (value, index, idPrefix) => {
+        const tableTd = (
+            <React.Fragment>
+                <span id={idPrefix + index}>{value}</span>
+                &nbsp;
+                <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText(idPrefix + index)}></span>
+            </React.Fragment>
+        );
+        if (value) {
+            return (
+                tableTd
+            )
+        } else {
+            return (
+                '-'
+            )
+        }
+    }
+
+
     /**
      * 結果の行生成.
      * @returns 行
@@ -46,24 +67,16 @@ const Naming = (props) => {
                     {result.target}
                 </td>
                 <td>
-                    <span id={'lowerCamelCase_' + index}>{result.lowerCamelCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('lowerCamelCase_' + index)}></span>
+                    {renderTableTd(result.lowerCamelCase, index, 'lowerCamelCase_')}
                 </td>
                 <td>
-                    <span id={'lowerSnakeCase_' + index}>{result.lowerSnakeCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('lowerSnakeCase_' + index)}></span>
+                    {renderTableTd(result.lowerSnakeCase, index, 'lowerSnakeCase_')}
                 </td>
                 <td>
-                    <span id={'upperCamelCase_' + index}>{result.upperCamelCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('upperCamelCase_' + index)}></span>
+                    {renderTableTd(result.upperCamelCase, index, 'upperCamelCase_')}
                 </td>
                 <td>
-                    <span id={'upperSnakeCase_' + index}>{result.upperSnakeCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('upperSnakeCase_' + index)}></span>
+                    {renderTableTd(result.upperSnakeCase, index, 'upperSnakeCase_')}
                 </td>
             </tr>
         );
@@ -75,7 +88,7 @@ const Naming = (props) => {
 
     return (
         <React.Fragment>
-            <Header/>
+            <Header />
             <div class="uk-container">
                 <u><i><h2>Naming</h2></i></u>
                 <div class="uk-grid">
@@ -140,8 +153,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        namingAction: (target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase) =>
-            dispatch(namingAction(target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase)),
+        namingOperation: (target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase) =>
+            dispatch(namingOperation(target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase)),
     };
 };
 
