@@ -6,7 +6,7 @@ export const SETTING = "SETTING";
  * @param {*} target 
  * @returns 
  */
-export const naming = (target, results) => {
+export const namingAction = (target, results) => {
     return {
         type: NAMING,
         payload: {
