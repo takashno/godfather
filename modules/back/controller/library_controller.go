@@ -9,7 +9,7 @@ import (
 
 type LibraryController struct{}
 
-func (pc NamingController) ListLibrary(c *gin.Context) {
+func (pc LibraryController) ListLibrary(c *gin.Context) {
 
 	// JSON BodyのParse
 	request := model.NamingRequest{}
