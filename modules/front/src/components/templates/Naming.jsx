@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { namingOperation } from '../../ducks/naming/operations';
 import Header from '../organisms/Header'
 
@@ -7,6 +7,9 @@ import Header from '../organisms/Header'
  * ネーミング機能コンポーネント.
  */
 const Naming = (props) => {
+
+    const dispath = useDispatch();
+    const selector = useSelector(state => state);
 
     const COPY_TOOLTIP = 'コピーします.';
 
@@ -19,12 +22,13 @@ const Naming = (props) => {
         console.log('lowerSnakeCase : ' + document.querySelector('#lowerSnakeCase').value);
         console.log('upperCamelCase : ' + document.querySelector('#upperCamelCase').value);
         console.log('upperSnakeCase : ' + document.querySelector('#upperSnakeCase').value);
-        props.namingOperation(
+        dispath(namingOperation(
             event.target.value,
             document.querySelector('#lowerCamelCase').value,
             document.querySelector('#lowerSnakeCase').value,
             document.querySelector('#upperCamelCase').value,
-            document.querySelector('#upperSnakeCase').value);
+            document.querySelector('#upperSnakeCase').value));
+        
     }
 
     const copyText = (target) => {
@@ -61,7 +65,7 @@ const Naming = (props) => {
      * @returns 行
      */
     const renderTableRow = () => {
-        const tableRow = props.naming.results.map((result, index) =>
+        const tableRow = selector.naming.results.map((result, index) =>
             <tr>
                 <td>
                     {result.target}
@@ -145,17 +149,19 @@ const Naming = (props) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        naming: state.naming
-    };
-};
+// const mapStateToProps = state => {
+//     return {
+//         naming: state.naming
+//     };
+// };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        namingOperation: (target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase) =>
-            dispatch(namingOperation(target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase)),
-    };
-};
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         namingOperation: (target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase) =>
+//             dispatch(namingOperation(target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase)),
+//     };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Naming);
+// export default connect(mapStateToProps, mapDispatchToProps)(Naming);
+
+export default Naming;

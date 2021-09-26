@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { naming as namingAction } from '../../ducks/naming/actions';
+import { namingAction } from '../../ducks/naming/actions';
 import Header from '../organisms/Header'
 
 /**
