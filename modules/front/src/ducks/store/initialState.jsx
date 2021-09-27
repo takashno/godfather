@@ -12,10 +12,12 @@ const initialState = {
         ]
     },
     setting: {
-        lowerCamelCase: true,
-        lowerSnakeCase: false,
-        upperCamelCase: false,
-        upperSnakeCase: false
+        caseSetting: {
+            lowerCamelCase: true,
+            lowerSnakeCase: true,
+            upperCamelCase: true,
+            upperSnakeCase: true
+        }
     }
 }
 export default initialState;
