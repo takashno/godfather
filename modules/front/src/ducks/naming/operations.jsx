@@ -8,8 +8,9 @@ export const namingOperation = (target, lowerCamelCase, lowerSnakeCase, upperCam
 
         // textareaの値を改行コードで分割
         const targets = target.split(/\n/);
+        const filteredTargets = targets.filter(x=> x);
         const obj = {
-            targets: targets,
+            targets: filteredTargets,
             lowerCamelCase: lowerCamelCase === "on",
             lowerSnakeCase: lowerSnakeCase === "on",
             upperCamelCase: upperCamelCase === "on",

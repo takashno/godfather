@@ -55,6 +55,9 @@ func inintRoute() *gin.Engine {
 	}))
 
 	router.POST("/naming", naming.Naming)
-	router.GET("/library", library.ListLibrary)
+	libraryGroup := router.Group("/library") 
+	{
+		libraryGroup.GET("/list", library.ListLibrary)
+	}  
 	return router
 }

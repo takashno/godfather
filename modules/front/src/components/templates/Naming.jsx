@@ -67,7 +67,7 @@ const Naming = (props) => {
      * @returns 行
      */
     const renderTableRow = () => {
-        const tableRow = selector.naming.results.map((result, index) =>
+        const tableRow = selector.naming.results.filter(x=>x.target).map((result, index) =>
             <tr>
                 <td>
                     {result.target}
