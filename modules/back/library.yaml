@@ -35,4 +35,16 @@ words:
     converteds: 
     - locale: "en"
       converted: "github"
+  - word: "テスト"
+    converteds: 
+    - locale: "en"
+      converted: "test"
+  - word: "TEST"
+    converteds: 
+    - locale: "en"
+      converted: "test"
+  - word: "項目"
+    converteds: 
+    - locale: "en"
+      converted: "koumoku"
         

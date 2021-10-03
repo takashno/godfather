@@ -1,12 +1,24 @@
 import React from 'react'
-import { connect } from 'react-redux';
-import { namingAction } from '../../ducks/naming/actions';
+import { useState, useEffect, useLayoutEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { registedWordsOperation } from '../../ducks/library/operations'
 import Header from '../organisms/Header'
 
 /**
  * ネーミング機能コンポーネント.
  */
 const Library = (props) => {
+
+    const dispath = useDispatch();
+    const selector = useSelector(state => state);
+
+    useLayoutEffect(() => {
+        // 画面遷移時に入力をクリアする
+        dispath(registedWordsOperation(10, 1));
+        return () => {
+            console.log("Unmount....");
+        }
+    }, []);
 
     const tableHeaderStyle = {
         textTransform: 'none'
@@ -17,13 +29,13 @@ const Library = (props) => {
      * @returns 行
      */
     const renderTableRow = () => {
-        const tableRow = props.naming.results.map((result, index) =>
+        const tableRow = selector.registedWords.results.words.map((words, index) =>
             <tr>
                 <td>
-                    {result.target}
+                    {words.word}
                 </td>
                 <td>
-                    {result.converted}
+                    {words.converted}
                 </td>
             </tr>
         );
@@ -41,7 +53,7 @@ const Library = (props) => {
                 <div class="uk-grid">
                     <div class="uk-with-1-1">
                         <p>
-                            ライブラリに登録されている各種ワードの一覧を確認する機能です.<br/>
+                            ライブラリに登録されている各種ワードの一覧を確認する機能です.<br />
                         </p>
                     </div>
                 </div>
@@ -80,6 +92,7 @@ const Library = (props) => {
                         </ul>
                     </div>
                 </div>
+                { /*
                 <div class="uk-grid">
                     <div class="uk-width-1-1">
                         <h4>
@@ -115,22 +128,10 @@ const Library = (props) => {
                         </ul>
                     </div>
                 </div>
+                */}
             </div>
         </React.Fragment>
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        naming: state.naming
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        namingAction: (target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase) =>
-            dispatch(namingAction(target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase)),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Library);
+export default Library;

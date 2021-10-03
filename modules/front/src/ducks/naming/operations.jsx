@@ -17,6 +17,7 @@ export const namingOperation = (target, lowerCamelCase, lowerSnakeCase, upperCam
             upperSnakeCase: upperSnakeCase === "on"
         };
         const respose = await axios.post('http://localhost:3000/naming', obj);
+        console.log(respose.data)
         dispach(namingAction(target, respose.data));   
     }
 }

@@ -1,8 +1,10 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
 	"github.com/takashno/godfather/tree/main/modules/back/model"
 	"github.com/takashno/godfather/tree/main/modules/back/service"
 )
@@ -12,20 +14,26 @@ type LibraryController struct{}
 func (pc LibraryController) ListLibrary(c *gin.Context) {
 
 	// JSON BodyのParse
-	request := model.NamingRequest{}
-	err := c.Bind(&request)
-	if err != nil {
-		c.String(http.StatusBadRequest, "Bad Request")
-		return
-	}
+	// request := model.LibraryListRequest{}
+	// err := c.Bind(&request)
+	// if err != nil {
+	// 	c.String(http.StatusBadRequest, "Bad Request")
+	// 	return
+	// }
+	request := model.LibraryListRequest{}
+	limit, _ := strconv.Atoi(c.Query("limit"))
+	request.Pagination.Limit = limit
+	page, _ := strconv.Atoi(c.Query("page"))
+	request.Pagination.Page = page
+	request.Pagination.Sort = c.Query("sort")
 
 	// Service実行
-	namingService := service.NamingService{}
-	result, err := namingService.ResolveWord(&request)
-    if err != nil{
-        c.String(http.StatusInternalServerError, "Server Error")
-        return
-    }
+	libraryService := service.LibraryService{}
+	result, err := libraryService.LibraryList(&request)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Server Error")
+		return
+	}
 
 	// メッセージ返却
 	c.JSON(http.StatusOK, result)

@@ -2,23 +2,25 @@
 package library
 
 import (
-	"os"
-	"go.uber.org/zap"
 	"log"
+	"os"
+
+	"go.uber.org/zap"
 	yaml "gopkg.in/yaml.v3"
 )
 
 // 外部アクセスを行うインタフェース
 type Library interface {
-	ResolveWord(key string)(string, bool)
+	ResolveWord(key string) (string, bool)
 	RegistWord(key string, value string)
-	ResolveReservedWord(key string)(string, bool)
+	ResolveReservedWord(key string) (string, bool)
 	RegistReservedWord(key string, value string)
+	WordKeys() []string
 }
 
 // 値保持のための構造体
 type library struct {
-	words map[string]string
+	words         map[string]string
 	reservedWords map[string]string
 }
 
@@ -59,16 +61,24 @@ func (c *library) RegistReservedWord(key string, value string) {
 	c.reservedWords[key] = value
 }
 
+func (c *library) WordKeys() []string {
+	ks := []string{}
+	for k, _ := range c.words {
+
+		ks = append(ks, k)
+	}
+	return ks
+}
+
 /* ------------------------------------------------ */
 
 type Convert struct {
-	Locale string `yaml:"locale"`
-	Converted  string `yaml:"converted"`
-
+	Locale    string `yaml:"locale"`
+	Converted string `yaml:"converted"`
 }
 
 type Word struct {
-	Word string `yaml:"word"`
+	Word       string    `yaml:"word"`
 	Converteds []Convert `yaml:"converteds"`
 }
 
@@ -81,8 +91,8 @@ type LibraryFile struct {
 func Init() {
 
 	logger, err := zap.NewProduction()
-	if err != nil{
-	   log.Fatal(err.Error())
+	if err != nil {
+		log.Fatal(err.Error())
 	}
 
 	logger.Info("start library initialize.")
