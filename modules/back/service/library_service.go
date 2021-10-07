@@ -25,15 +25,6 @@ func (LibraryService) LibraryList(request *model.LibraryListRequest) (model.Libr
 	// 全Keyを取得＆ソート
 	keys := library.WordKeys()
 	keys = sort.StringSlice(keys)
-	from := 0
-	if request.Pagination.Page > 1 {
-		from = request.Pagination.Limit * (request.Pagination.Page - 1)
-	}
-	to := from + request.Pagination.Limit
-	if len(keys) < from+request.Pagination.Limit {
-		to = len(keys)
-	}
-	targetKeys := keys[from:to]
 
 	// 全サイズ
 	totalSize := len(keys)
@@ -46,12 +37,27 @@ func (LibraryService) LibraryList(request *model.LibraryListRequest) (model.Libr
 
 	// 返却結果
 	var words []model.Word
-	for _, k := range targetKeys {
-		word := new(model.Word)
-		w, _ := library.ResolveWord(k)
-		word.Word = k
-		word.Converted = w
-		words = append(words, *word)
+
+	if request.Pagination.Page <= totalPage {
+		// 開始インデックス
+		from := 0
+		if request.Pagination.Page > 1 {
+			from = request.Pagination.Limit * (request.Pagination.Page - 1)
+		}
+		// 終了インデックス
+		to := from + request.Pagination.Limit
+		if len(keys) < from+request.Pagination.Limit {
+			to = len(keys)
+		}
+		// 対象とするKeyスライス
+		targetKeys := keys[from:to]
+		for _, k := range targetKeys {
+			word := new(model.Word)
+			w, _ := library.ResolveWord(k)
+			word.Word = k
+			word.Converted = w
+			words = append(words, *word)
+		}
 	}
 
 	paginationRespose := new(model.PaginationResponse)

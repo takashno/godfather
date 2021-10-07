@@ -146,7 +146,7 @@ const Naming = (props) => {
                             命名対象のワードを&nbsp;<strong>Target</strong>&nbsp;へ入力すると、辞書に登録されている情報に基づいて変換した結果を&nbsp;<strong>Naming&nbsp;Result</strong>&nbsp;へ表示します.<br />
                             変換はまず入力された文字列から名詞と考えられる言葉のみを抽出し、変換対象文字列として構築します.<br />
                             その後に名詞ごとに登録辞書に対して検索をかけて変換を行います.<br />
-                            変換に失敗した文字列は、&nbsp;<strong>Missing</strong>&nbsp;に表示されます.<br />
+                            辞書変換に失敗した文字列は、&nbsp;<strong>Missing</strong>&nbsp;に表示されます. 不足している単語は&nbsp;<strong>Library</strong>&nbsp;機能から登録してください。<br />
                             <u>※&nbsp;この画面への入力は別ページに移動すると消えます. 残したい場合は、コピーしておいてください.</u><br />
                         </p>
                     </div>
