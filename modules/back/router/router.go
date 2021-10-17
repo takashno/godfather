@@ -3,8 +3,10 @@ package router
 import (
 	"fmt"
 	"time"
-	"github.com/gin-gonic/gin"
+
 	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+
 	// "net/http"
 	"github.com/takashno/godfather/tree/main/modules/back/controller"
 )
@@ -17,7 +19,7 @@ func Init() {
 
 // ルーティング初期化処理
 func inintRoute() *gin.Engine {
-	
+
 	fmt.Println("init route start.")
 
 	// コントローラーの取得
@@ -55,6 +57,10 @@ func inintRoute() *gin.Engine {
 	}))
 
 	router.POST("/naming", naming.Naming)
-	router.GET("/library", library.ListLibrary)
+	libraryGroup := router.Group("/library")
+	{
+		libraryGroup.GET("/list", library.ListLibrary)
+		libraryGroup.POST("/regist/words", library.RegistWords)
+	}
 	return router
 }

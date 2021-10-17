@@ -1,6 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux';
-import { namingAction } from '../../ducks/naming/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { settingOperation } from '../../ducks/setting/operations';
 import Header from '../organisms/Header'
 
 /**
@@ -8,74 +8,27 @@ import Header from '../organisms/Header'
  */
 const Setting = (props) => {
 
-    const COPY_TOOLTIP = 'コピーします.';
+    const dispath = useDispatch();
+    const selector = useSelector(state => state);
+    const caseSettingSelector = selector.setting.caseSetting;
 
-    /**
-     * 入力ハンドラ.
-     */
-    // const handleChange = (event) => {
-    //     console.log(event.target.value);
-    //     console.log('lowerCamelCase : ' + document.querySelector('#lowerCamelCase').value);
-    //     console.log('lowerSnakeCase : ' + document.querySelector('#lowerSnakeCase').value);
-    //     console.log('upperCamelCase : ' + document.querySelector('#upperCamelCase').value);
-    //     console.log('upperSnakeCase : ' + document.querySelector('#upperSnakeCase').value);
-    //     props.namingAction(
-    //         event.target.value,
-    //         document.querySelector('#lowerCamelCase').value,
-    //         document.querySelector('#lowerSnakeCase').value,
-    //         document.querySelector('#upperCamelCase').value,
-    //         document.querySelector('#upperSnakeCase').value);
-    // }
-
-    const copyText = (target) => {
-        navigator.clipboard.writeText(document.querySelector('#' + target).innerText);
-    }
-
-    const tableHeaderStyle = {
-        textTransform: 'none'
-    }
-
-    /**
-     * 結果の行生成.
-     * @returns 行
-     */
-    const renderTableRow = () => {
-        const tableRow = props.naming.results.map((result, index) =>
-            <tr>
-                <td>
-                    {result.target}
-                </td>
-                <td>
-                    <span id={'lowerCamelCase_' + index}>{result.lowerCamelCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('lowerCamelCase_' + index)}></span>
-                </td>
-                <td>
-                    <span id={'lowerSnakeCase_' + index}>{result.lowerSnakeCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('lowerSnakeCase_' + index)}></span>
-                </td>
-                <td>
-                    <span id={'upperCamelCase_' + index}>{result.upperCamelCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('upperCamelCase_' + index)}></span>
-                </td>
-                <td>
-                    <span id={'upperSnakeCase_' + index}>{result.upperSnakeCase}</span>
-                    &nbsp;
-                    <span uk-icon="copy" uk-tooltip={COPY_TOOLTIP} onClick={() => copyText('upperSnakeCase_' + index)}></span>
-                </td>
-            </tr>
-        );
-
-        return (
-            tableRow
-        )
+    const handleChange = () => {
+        var lowerCamelCase = document.querySelector('#lowerCamelCase').checked;
+        var lowerSnakeCase = document.querySelector('#lowerSnakeCase').checked;
+        var upperCamelCase = document.querySelector('#upperCamelCase').checked;
+        var upperSnakeCase = document.querySelector('#upperSnakeCase').checked;
+        const caseSetting = {
+            lowerCamelCase: lowerCamelCase,
+            lowerSnakeCase: lowerSnakeCase,
+            upperCamelCase: upperCamelCase,
+            upperSnakeCase: upperSnakeCase
+        }
+        dispath(settingOperation(caseSetting));
     }
 
     return (
         <React.Fragment>
-            <Header/>
+            <Header />
             <div class="uk-container">
                 <u><i><h2>Setting</h2></i></u>
                 <div class="uk-grid">
@@ -88,24 +41,39 @@ const Setting = (props) => {
                 <div class="uk-grid">
                     <div class="uk-width-1-1 ">
                         <h4>
-                            <strong>Case&nbsp;Setting&nbsp;<span uk-icon="question" uk-tooltip="ネーミング結果を表で表します."></span></strong>
+                            <strong>Case&nbsp;Setting</strong>
                         </h4>
-                        <div class="uk-overflow-auto">
-                            <table class="uk-table uk-table-small uk-table-hover">
-                                <thead>
-                                    <tr>
-                                        <th style={tableHeaderStyle}>Target Word</th>
-                                        <th style={tableHeaderStyle}>LowerCamelCase</th>
-                                        <th style={tableHeaderStyle}>LowerSnakeCase</th>
-                                        <th style={tableHeaderStyle}>UpperCamelCase</th>
-                                        <th style={tableHeaderStyle}>UpperSnakeCase</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderTableRow()}
-                                </tbody>
-                            </table>
-                        </div>
+                        <p>
+                            Namingにて変換するケースの指定を行います.<br />
+                            デフォルト状態では全てのケースが対象となるようにチェックが<code>ON</code>の状態です.<br />
+                            全てのケースは不要でありNaming結果表から削りたい場合などはチェックを<code>OFF</code>にしてください.
+                        </p>
+                        <form class="uk-form-horizontal uk-margin-small">
+                            <div class="uk-margin-small">
+                                <div class="uk-form-label">LowerCamelCase</div>
+                                <div class="uk-form-controls uk-form-controls-text">
+                                    <input class="uk-checkbox" type="checkbox" id="lowerCamelCase" onChange={handleChange} checked={caseSettingSelector.lowerCamelCase} />
+                                </div>
+                            </div>
+                            <div class="uk-margin-small">
+                                <div class="uk-form-label">LowerSnakeCase</div>
+                                <div class="uk-form-controls uk-form-controls-text">
+                                    <input class="uk-checkbox" type="checkbox" id="lowerSnakeCase" onChange={handleChange} checked={caseSettingSelector.lowerSnakeCase} />
+                                </div>
+                            </div>
+                            <div class="uk-margin-small">
+                                <div class="uk-form-label">UpperCamelCase</div>
+                                <div class="uk-form-controls uk-form-controls-text">
+                                    <input class="uk-checkbox" type="checkbox" id="upperCamelCase" onChange={handleChange} checked={caseSettingSelector.upperCamelCase} />
+                                </div>
+                            </div>
+                            <div class="uk-margin-small">
+                                <div class="uk-form-label">UpperSnakeCase</div>
+                                <div class="uk-form-controls uk-form-controls-text">
+                                    <input class="uk-checkbox" type="checkbox" id="upperSnakeCase" onChange={handleChange} checked={caseSettingSelector.upperSnakeCase} />
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -113,17 +81,4 @@ const Setting = (props) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        naming: state.naming
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        namingAction: (target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase) =>
-            dispatch(namingAction(target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase)),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Setting);
+export default Setting;
