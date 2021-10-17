@@ -1,50 +1,277 @@
 words:
   - word: "あいうえお"
-    converteds: 
-    - locale: "en"
-      converted: "aiueo"
+    converteds:
+      - locale: "en"
+        converted: "aiueo"
   - word: "かきくけこ"
-    converteds: 
-    - locale: "en"
-      converted: "kakikukeko"     
+    converteds:
+      - locale: "en"
+        converted: "kakikukeko"
   - word: "さしすせそ"
-    converteds: 
-    - locale: "en"
-      converted: "sashisuseso"
+    converteds:
+      - locale: "en"
+        converted: "sashisuseso"
   - word: "あい"
-    converteds: 
-    - locale: "en"
-      converted: "love"
+    converteds:
+      - locale: "en"
+        converted: "love"
   - word: "うえ"
-    converteds: 
-    - locale: "en"
-      converted: "up"
+    converteds:
+      - locale: "en"
+        converted: "up"
   - word: "お"
-    converteds: 
-    - locale: "en"
-      converted: "tail"
+    converteds:
+      - locale: "en"
+        converted: "tail"
   - word: "アカウント"
-    converteds: 
-    - locale: "en"
-      converted: "account"
+    converteds:
+      - locale: "en"
+        converted: "account"
   - word: "Google"
-    converteds: 
-    - locale: "en"
-      converted: "google"
+    converteds:
+      - locale: "en"
+        converted: "google"
   - word: "Github"
-    converteds: 
-    - locale: "en"
-      converted: "github"
+    converteds:
+      - locale: "en"
+        converted: "github"
   - word: "テスト"
-    converteds: 
-    - locale: "en"
-      converted: "test"
+    converteds:
+      - locale: "en"
+        converted: "test"
   - word: "TEST"
-    converteds: 
-    - locale: "en"
-      converted: "test"
+    converteds:
+      - locale: "en"
+        converted: "test"
   - word: "項目"
-    converteds: 
-    - locale: "en"
-      converted: "koumoku"
-        
+    converteds:
+      - locale: "en"
+        converted: "koumoku"
+  - word: "ビジネス"
+    converteds:
+      - locale: "en"
+        converted: "business"
+  - word: "業務"
+    converteds:
+      - locale: "en"
+        converted: "business"
+  - word: "商売"
+    converteds:
+      - locale: "en"
+        converted: "business"
+  - word: "会社"
+    converteds:
+      - locale: "en"
+        converted: "company"
+  - word: "企業"
+    converteds:
+      - locale: "en"
+        converted: "company"
+  - word: "コスト"
+    converteds:
+      - locale: "en"
+        converted: "cost"
+  - word: "費用"
+    converteds:
+      - locale: "en"
+        converted: "cost"
+  - word: "取引"
+    converteds:
+      - locale: "en"
+        converted: "deal"
+  - word: "契約"
+    converteds:
+      - locale: "en"
+        converted: "deal"
+  - word: "部門"
+    converteds:
+      - locale: "en"
+        converted: "department"
+  - word: "割引"
+    converteds:
+      - locale: "en"
+        converted: "discount"
+  - word: "情報"
+    converteds:
+      - locale: "en"
+        converted: "information"
+  - word: "仕事"
+    converteds:
+      - locale: "en"
+        converted: "job"
+  - word: "リーダー"
+    converteds:
+      - locale: "en"
+        converted: "leader"
+  - word: "指導者"
+    converteds:
+      - locale: "en"
+        converted: "leader"
+  - word: "会議"
+    converteds:
+      - locale: "en"
+        converted: "meeting"
+  - word: "ミーティング"
+    converteds:
+      - locale: "en"
+        converted: "meeting"
+  - word: "打ち合わせ"
+    converteds:
+      - locale: "en"
+        converted: "meeting"
+  - word: "メンバー"
+    converteds:
+      - locale: "en"
+        converted: "member"
+  - word: "一員"
+    converteds:
+      - locale: "en"
+        converted: "member"
+  - word: "提案"
+    converteds:
+      - locale: "en"
+        converted: "offer"
+  - word: "事業所"
+    converteds:
+      - locale: "en"
+        converted: "office"
+  - word: "営業所"
+    converteds:
+      - locale: "en"
+        converted: "office"
+  - word: "計画"
+    converteds:
+      - locale: "en"
+        converted: "plan"
+  - word: "実践"
+    converteds:
+      - locale: "en"
+        converted: "practice"
+  - word: "練習"
+    converteds:
+      - locale: "en"
+        converted: "practice"
+  - word: "訓練"
+    converteds:
+      - locale: "en"
+        converted: "practice"
+  - word: "価格"
+    converteds:
+      - locale: "en"
+        converted: "price"
+  - word: "値段"
+    converteds:
+      - locale: "en"
+        converted: "price"
+  - word: "昇給"
+    converteds:
+      - locale: "en"
+        converted: "raise"
+  - word: "記録"
+    converteds:
+      - locale: "en"
+        converted: "record"
+  - word: "成績"
+    converteds:
+      - locale: "en"
+        converted: "record"
+  - word: "最高記録"
+    converteds:
+      - locale: "en"
+        converted: "record"
+  - word: "役割"
+    converteds:
+      - locale: "en"
+        converted: "role"
+  - word: "販売"
+    converteds:
+      - locale: "en"
+        converted: "sale"
+  - word: "サービス"
+    converteds:
+      - locale: "en"
+        converted: "service"
+  - word: "Service"
+    converteds:
+      - locale: "en"
+        converted: "service"
+  - word: "分前"
+    converteds:
+      - locale: "en"
+        converted: "share"
+  - word: "分け前"
+    converteds:
+      - locale: "en"
+        converted: "share"
+  - word: "口座"
+    converteds:
+      - locale: "en"
+        converted: "account"
+  - word: "請求書"
+    converteds:
+      - locale: "en"
+        converted: "bill"
+  - word: "紙幣"
+    converteds:
+      - locale: "en"
+        converted: "bill"
+  - word: "特別手当"
+    converteds:
+      - locale: "en"
+        converted: "bonus"
+  - word: "賞与"
+    converteds:
+      - locale: "en"
+        converted: "bonus"
+  - word: "資本金"
+    converteds:
+      - locale: "en"
+        converted: "capital"
+  - word: "資本"
+    converteds:
+      - locale: "en"
+        converted: "capital"
+  - word: "経歴"
+    converteds:
+      - locale: "en"
+        converted: "career"
+  - word: "現金"
+    converteds:
+      - locale: "en"
+        converted: "cash"
+  - word: "セント"
+    converteds:
+      - locale: "en"
+        converted: "cent"
+  - word: "難題"
+    converteds:
+      - locale: "en"
+        converted: "challenge"
+  - word: "挑戦"
+    converteds:
+      - locale: "en"
+        converted: "challenge"
+  - word: "異議"
+    converteds:
+      - locale: "en"
+        converted: "challenge"
+  - word: "コイン"
+    converteds:
+      - locale: "en"
+        converted: "coin"
+  - word: "硬貨"
+    converteds:
+      - locale: "en"
+        converted: "coin"
+  - word: "料金"
+    converteds:
+      - locale: "en"
+        converted: "charge"
+  - word: "使用料"
+    converteds:
+      - locale: "en"
+        converted: "charge"
+  - word: "告発"
+    converteds:
+      - locale: "en"
+        converted: "charge"

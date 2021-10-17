@@ -4,9 +4,12 @@ package library
 import (
 	"log"
 	"os"
+	"sort"
 
 	"go.uber.org/zap"
 	yaml "gopkg.in/yaml.v3"
+
+	"github.com/takashno/godfather/tree/main/modules/back/model"
 )
 
 // 外部アクセスを行うインタフェース
@@ -67,25 +70,12 @@ func (c *library) WordKeys() []string {
 
 		ks = append(ks, k)
 	}
+	// Keyでソートして返却する.
+	sort.SliceStable(ks, func(i, j int) bool { return ks[i] < ks[j] })
 	return ks
 }
 
 /* ------------------------------------------------ */
-
-type Convert struct {
-	Locale    string `yaml:"locale"`
-	Converted string `yaml:"converted"`
-}
-
-type Word struct {
-	Word       string    `yaml:"word"`
-	Converteds []Convert `yaml:"converteds"`
-}
-
-type LibraryFile struct {
-	// 埋め込み のフィールドに 'inline' タグをつける
-	Words []Word `yaml:"words"`
-}
 
 // ライブラリ初期化処理
 func Init() {
@@ -98,7 +88,7 @@ func Init() {
 	logger.Info("start library initialize.")
 
 	// YAMLを読み込むための構造体を生成
-	libraryFile := LibraryFile{}
+	libraryFile := model.YamlLibraryFile{}
 
 	// ファイル読み込み（TODO：環境変数対応）
 	b, _ := os.ReadFile("/Users/takashimanozomu/work/030_pgworkspace/github.com/godfather/modules/back/library.yaml")

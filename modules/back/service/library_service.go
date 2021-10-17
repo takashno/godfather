@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"sort"
 
 	"github.com/takashno/godfather/tree/main/modules/back/library"
@@ -73,4 +74,37 @@ func (LibraryService) LibraryList(request *model.LibraryListRequest) (model.Libr
 	response.Pagination = *paginationRespose
 
 	return *response, nil
+}
+
+func (LibraryService) RegistWords(request *model.RegistWordsRequest) (model.RegistWordsRespose, error) {
+
+	library := library.GetLibrary()
+
+	registWordsRespose := new(model.RegistWordsRespose)
+
+	for _, v := range request.Words {
+
+		_, ok := library.ResolveWord(v.Word)
+
+		wordRegistResult := new(model.WordRegistResult)
+		wordRegistResult.Word = v.Word
+
+		if ok {
+			wordRegistResult.Converted = "-"
+			wordRegistResult.FailureReason = "duplicate"
+			wordRegistResult.Status = "fail"
+		} else {
+			// 存在しない場合に、登録を行う
+			library.RegistWord(v.Word, v.Converted)
+			wordRegistResult.Converted = v.Converted
+			wordRegistResult.Status = "success"
+		}
+
+		registWordsRespose.Words = append(registWordsRespose.Words, *wordRegistResult)
+	}
+
+	fmt.Println(registWordsRespose)
+
+	return *registWordsRespose, nil
+
 }

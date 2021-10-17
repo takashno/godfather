@@ -41,19 +41,27 @@ func (NamingService) ResolveWord(request *model.NamingRequest) ([]model.Naming, 
 		// 文字列全体が辞書にヒットする場合は、そちらを優先する
 		resolveWordFull, ok := library.ResolveWord(v)
 		if ok {
-			naming1 := new(model.Naming)
-			naming1.Target = v
-			naming1.ConvertTarget = v
-			naming1.LowerCamelCase = resolveWordFull
-			naming1.LowerSnakeCase = util.ToLowerSnakeCase(resolveWordFull)
-			naming1.UpperCamelCase = util.FirstOnlyToUpper(resolveWordFull)
-			naming1.UpperSnakeCase = util.ToUpperSnakeCase(resolveWordFull)
-			namingResult[i] = *naming1
+			naming := new(model.Naming)
+			naming.Target = v
+			naming.ConvertTarget = v
+			if request.LowerCamelCase {
+				naming.LowerCamelCase = resolveWordFull
+			}
+			if request.LowerSnakeCase {
+				naming.LowerSnakeCase = util.ToLowerSnakeCase(resolveWordFull)
+			}
+			if request.UpperCamelCase {
+				naming.UpperCamelCase = util.FirstOnlyToUpper(resolveWordFull)
+			}
+			if request.UpperSnakeCase {
+				naming.UpperSnakeCase = util.ToUpperSnakeCase(resolveWordFull)
+			}
+			namingResult[i] = *naming
 			continue
 		}
 
 		// tokenize
-		fmt.Println("---tokenize---")
+		fmt.Println("--- Tokenize ---")
 		var convertSlice []string
 		tokens := t.Tokenize(v)
 		for _, token := range tokens {
@@ -106,15 +114,29 @@ func (NamingService) ResolveWord(request *model.NamingRequest) ([]model.Naming, 
 			}
 		}
 
-		naming1 := new(model.Naming)
-		naming1.Target = v
-		naming1.ConvertTarget = convertTarget
-		naming1.Missings = missingSlice
-		naming1.LowerCamelCase = resolvedLowerCamelCase
-		naming1.LowerSnakeCase = util.ToLowerSnakeCase(resolvedLowerCamelCase)
-		naming1.UpperCamelCase = util.FirstOnlyToUpper(resolvedLowerCamelCase)
-		naming1.UpperSnakeCase = util.ToUpperSnakeCase(resolvedLowerCamelCase)
-		namingResult[i] = *naming1
+		naming := new(model.Naming)
+		// 1つでも変換に失敗した文字があれば、失敗とみなす
+		if len(missingSlice) == 0 {
+			naming.Status = "success"
+		} else {
+			naming.Status = "fail"
+		}
+		naming.Target = v
+		naming.ConvertTarget = convertTarget
+		naming.Missings = missingSlice
+		if request.LowerCamelCase {
+			naming.LowerCamelCase = resolvedLowerCamelCase
+		}
+		if request.LowerSnakeCase {
+			naming.LowerSnakeCase = util.ToLowerSnakeCase(resolvedLowerCamelCase)
+		}
+		if request.UpperCamelCase {
+			naming.UpperCamelCase = util.FirstOnlyToUpper(resolvedLowerCamelCase)
+		}
+		if request.UpperSnakeCase {
+			naming.UpperSnakeCase = util.ToUpperSnakeCase(resolvedLowerCamelCase)
+		}
+		namingResult[i] = *naming
 
 	}
 	return namingResult, nil

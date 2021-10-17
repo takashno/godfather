@@ -11,6 +11,7 @@ type NamingRequest struct {
 
 // /naming API Response Model.
 type Naming struct {
+	Status         string   `json:"status"`
 	Target         string   `json:"target"`
 	ConvertTarget  string   `json:"convertTarget"`
 	Missings       []string `json:"missings"`

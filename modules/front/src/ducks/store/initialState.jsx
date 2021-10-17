@@ -3,6 +3,7 @@ const initialState = {
         target: ['対象を入力してください.命名したいワード'],
         results: [
             {
+                status: "ステータス",
                 target: "対象のワード",
                 convertTarget: "変換対象の文字",
                 missing: [
