@@ -2,15 +2,16 @@ import React from 'react'
 import { /*useState, useEffect,*/ useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { registedWordsOperation } from '../../ducks/library/operations'
+import { Godfahter, Pagination, RegistedWords } from '../../Types';
 import Header from '../organisms/Header'
 
 /**
  * 辞書機能コンポーネント.
  */
-const Library = (props) => {
+const Library = () => {
 
     const dispath = useDispatch();
-    const selector = useSelector(state => state);
+    const selector: RegistedWords = useSelector(state => state.registedWords);
 
     useLayoutEffect(() => {
         // 画面遷移時に入力をクリアする
@@ -20,11 +21,11 @@ const Library = (props) => {
         }
     }, []);
 
-    const tableHeaderStyle = {
+    const tableHeaderStyle: React.CSSProperties = {
         textTransform: 'none'
     }
 
-    const paginationEffect = (page, event) => {
+    const paginationEffect = (page: number, event: React.MouseEvent<HTMLElement>) => {
         console.log(event);
         event.preventDefault();
         // 画面遷移時に入力をクリアする
@@ -69,7 +70,7 @@ const Library = (props) => {
         for (let i = 0; i < selector.registedWords.results.pagination.totalPage; i++) {
             if (selector.registedWords.results.pagination.page - 3 < (i+1) &&  (i+1 < selector.registedWords.results.pagination.page + 3)) {
                 if ((i + 1) === selector.registedWords.results.pagination.page) {
-                    items.push(<li class="uk-active"><a href="#" onClick={(e) => paginationEffect(i + 1, e)}>{i + 1}</a></li>)
+                    items.push(<li className="uk-active"><a href="#" onClick={(e) => paginationEffect(i + 1, e)}>{i + 1}</a></li>)
                 } else {
                     items.push(<li><a href="#" onClick={(e) => paginationEffect(i + 1, e)}>{i + 1}</a></li>)
                 }
@@ -93,24 +94,24 @@ const Library = (props) => {
     return (
         <React.Fragment>
             <Header />
-            <div class="uk-container">
+            <div className="uk-container">
                 <u><i><h2>Library</h2></i></u>
-                <div class="uk-grid">
-                    <div class="uk-with-1-1">
-                        <div class="uk-with-1-1">
-                            <button class="uk-button uk-button-secondary uk-button-small uk-margin-small-right">新規登録</button>
-                            <button class="uk-button uk-button-primary uk-button-small uk-margin-small-right">Download</button>
-                            <button class="uk-button uk-button-danger uk-button-small">Upload</button>
+                <div className="uk-grid">
+                    <div className="uk-with-1-1">
+                        <div className="uk-with-1-1">
+                            <button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right">新規登録</button>
+                            <button className="uk-button uk-button-primary uk-button-small uk-margin-small-right">Download</button>
+                            <button className="uk-button uk-button-danger uk-button-small">Upload</button>
                         </div>
                     </div>
                 </div>
-                <div class="uk-grid">
-                    <div class="uk-width-1-1">
+                <div className="uk-grid">
+                    <div className="uk-width-1-1">
                         <h4>
                             <strong>Registed&nbsp;Words&nbsp;<span uk-icon="question" uk-tooltip="辞書として登録されているワードの一覧です."></span></strong>
                         </h4>
-                        <div class="uk-overflow-auto">
-                            <table class="uk-table uk-table-small uk-table-hover uk-table-divider">
+                        <div className="uk-overflow-auto">
+                            <table className="uk-table uk-table-small uk-table-hover uk-table-divider">
                                 <thead>
                                     <tr>
                                         <th style={tableHeaderStyle}>Target Word</th>
@@ -122,23 +123,8 @@ const Library = (props) => {
                                 </tbody>
                             </table>
                         </div>
-                        <ul class="uk-pagination uk-flex-center" uk-margin>
+                        <ul className="uk-pagination uk-flex-center" uk-margin>
                             {renderPaginationLi()}
-                            {/*  
-                            <li><a href="#"><span uk-pagination-previous></span></a></li>
-                            <li><a href="#">1</a></li>
-                            <li class="uk-disabled"><span>...</span></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">6</a></li>
-                            <li class="uk-active"><span>7</span></li>
-                            <li><a href="#">8</a></li>
-                            <li><a href="#">9</a></li>
-                            <li><a href="#">10</a></li>
-                            <li class="uk-disabled"><span>...</span></li>
-                            <li><a href="#">20</a></li>
-                            <li><a href="#"><span uk-pagination-next></span></a></li>
-                            */}
                         </ul>
                     </div>
                 </div>

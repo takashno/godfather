@@ -1,4 +1,7 @@
-const initialState = {
+
+import {Godfahter} from "../../Types"
+
+const initialState: Godfahter = {
     naming: {
         target: ['対象を入力してください.命名したいワード'],
         results: [
