@@ -11,7 +11,7 @@ import Header from '../organisms/Header'
 const Library = () => {
 
     const dispath = useDispatch();
-    const selector: RegistedWords = useSelector(state => state.registedWords);
+    const selector = useSelector((state: Godfahter) => state);
 
     useLayoutEffect(() => {
         // 画面遷移時に入力をクリアする
@@ -128,43 +128,6 @@ const Library = () => {
                         </ul>
                     </div>
                 </div>
-                { /*
-                <div class="uk-grid">
-                    <div class="uk-width-1-1">
-                        <h4>
-                            <strong>Reserved&nbsp;Words&nbsp;<span uk-icon="question" uk-tooltip="予約語として登録されているワードの一覧です."></span></strong>
-                        </h4>
-                        <div class="uk-overflow-auto">
-                            <table class="uk-table uk-table-small uk-table-hover">
-                                <thead>
-                                    <tr>
-                                        <th style={tableHeaderStyle}>Reserved Word</th>
-                                        <th style={tableHeaderStyle}>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderTableRow()}
-                                </tbody>
-                            </table>
-                        </div>
-                        <ul class="uk-pagination" uk-margin>
-                            <li><a href="#"><span uk-pagination-previous></span></a></li>
-                            <li><a href="#">1</a></li>
-                            <li class="uk-disabled"><span>...</span></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">6</a></li>
-                            <li class="uk-active"><span>7</span></li>
-                            <li><a href="#">8</a></li>
-                            <li><a href="#">9</a></li>
-                            <li><a href="#">10</a></li>
-                            <li class="uk-disabled"><span>...</span></li>
-                            <li><a href="#">20</a></li>
-                            <li><a href="#"><span uk-pagination-next></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                */}
             </div>
         </React.Fragment>
     );

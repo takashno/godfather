@@ -9,7 +9,7 @@ const initialState: Godfahter = {
                 status: "ステータス",
                 target: "対象のワード",
                 convertTarget: "変換対象の文字",
-                missing: [
+                missings: [
                     "変換できなかった文字"
                 ],
                 lowerCamelCase: "lowerCamelCase変換文字",

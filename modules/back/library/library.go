@@ -91,7 +91,7 @@ func Init() {
 	libraryFile := model.YamlLibraryFile{}
 
 	// ファイル読み込み（TODO：環境変数対応）
-	b, _ := os.ReadFile("/Users/takashimanozomu/work/030_pgworkspace/github.com/godfather/modules/back/library.yaml")
+	b, _ := os.ReadFile("./library.yaml")
 	yaml.Unmarshal(b, &libraryFile)
 
 	// 保持するためのライブラリを生成

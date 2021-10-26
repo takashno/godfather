@@ -3,7 +3,7 @@ export interface NamingResult {
     status: string;
     target: string;
     convertTarget: string;
-    missing: string[];
+    missings: string[];
     lowerCamelCase: string;
     lowerSnakeCase: string;
     upperCamelCase: string;

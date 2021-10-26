@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
+/**
+ * 共通ヘッダコンポーネント.
+ */
 const Header = () => {
 
     return (

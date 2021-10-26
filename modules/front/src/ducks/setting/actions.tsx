@@ -1,3 +1,5 @@
+import { SettingObj } from "../../Types";
+
 export const SETTING = "SETTING";
 
 /**
@@ -5,8 +7,7 @@ export const SETTING = "SETTING";
  * @param {*} caseSetting 
  * @returns 
  */
-export const settingAction = (caseSetting) => {
-    console.log(caseSetting)
+export const settingAction = (caseSetting: SettingObj) => {
     return {
         type: SETTING,
         payload: {

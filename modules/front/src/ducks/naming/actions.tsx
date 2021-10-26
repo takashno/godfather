@@ -1,3 +1,5 @@
+import { NamingResult } from "../../Types";
+
 export const NAMING = "NAMING";
 
 /**
@@ -5,7 +7,7 @@ export const NAMING = "NAMING";
  * @param {*} target 
  * @returns 
  */
-export const namingAction = (target, results) => {
+export const namingAction = (target: string[], results: NamingResult[]) => {
     return {
         type: NAMING,
         payload: {

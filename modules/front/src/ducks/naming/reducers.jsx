@@ -2,7 +2,7 @@ import { NAMING } from "./actions";
 import initialState from "../store/initialState";
 
 /**
- * 命名Reducers
+ * ネーミング機能Reducers.
  * @param {*} state 
  * @param {*} action 
  * @returns 
