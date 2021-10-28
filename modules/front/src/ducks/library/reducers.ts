@@ -1,4 +1,4 @@
-import { REGISTED_WORDS } from "./actions";
+import { RegistWordsAction, REGIST_WORDS } from "../../Types";
 import initialState from "../store/initialState";
 
 /**
@@ -7,9 +7,9 @@ import initialState from "../store/initialState";
  * @param {*} action 
  * @returns 
  */
-const LibraryReducer = (state = initialState.registedWords, action) => {
+const LibraryReducer = (state = initialState.registedWords, action: RegistWordsAction) => {
     switch (action.type) {
-        case REGISTED_WORDS:
+        case REGIST_WORDS:
             return {
                 criteria: action.payload.criteria,
                 results : action.payload.results

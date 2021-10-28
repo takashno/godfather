@@ -1,4 +1,4 @@
-import { NAMING } from "./actions";
+import { NAMING, NamingAction } from "../../Types";
 import initialState from "../store/initialState";
 
 /**
@@ -7,12 +7,12 @@ import initialState from "../store/initialState";
  * @param {*} action 
  * @returns 
  */
-const NamingReducer = (state = initialState.naming, action) => {
+const NamingReducer = (state = initialState.naming, action: NamingAction) => {
     switch (action.type) {
         case NAMING:
             return {
                 target: action.payload.target,
-                results : action.payload.results
+                results: action.payload.results
             };
         default:
             return state;

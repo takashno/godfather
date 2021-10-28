@@ -1,3 +1,4 @@
+import { Action } from "redux";
 
 export interface NamingResult {
     status: string;
@@ -74,3 +75,22 @@ export interface Godfahter {
     setting: Setting;
 }
 
+export const REGIST_WORDS: 'REGIST_WORDS' = 'REGIST_WORDS';
+export const NAMING: 'NAMING' = 'NAMING';
+
+
+export interface RegistWordsAction extends Action {
+    type: typeof REGIST_WORDS;
+    payload: {
+        criteria: Criteria;
+        results: RegistWordsResult;
+    }
+}
+
+export interface NamingAction extends Action {
+    type: typeof NAMING;
+    payload: {
+        target: string[];
+        results: NamingResult[];
+    }
+}
