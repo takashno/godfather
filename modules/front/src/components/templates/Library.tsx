@@ -1,5 +1,5 @@
 import React from 'react'
-import { /*useState, useEffect,*/ useLayoutEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { registedWordsOperation } from '../../ducks/library/operations'
 import { Godfahter, Pagination, RegistedWords } from '../../Types';
@@ -68,7 +68,7 @@ const Library = () => {
             items.push(<span>…</span>)
         }
         for (let i = 0; i < selector.registedWords.results.pagination.totalPage; i++) {
-            if (selector.registedWords.results.pagination.page - 3 < (i+1) &&  (i+1 < selector.registedWords.results.pagination.page + 3)) {
+            if (selector.registedWords.results.pagination.page - 3 < (i + 1) && (i + 1 < selector.registedWords.results.pagination.page + 3)) {
                 if ((i + 1) === selector.registedWords.results.pagination.page) {
                     items.push(<li className="uk-active"><a href="#" onClick={(e) => paginationEffect(i + 1, e)}>{i + 1}</a></li>)
                 } else {
