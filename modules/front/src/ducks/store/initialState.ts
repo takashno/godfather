@@ -45,8 +45,8 @@ const initialState: Godfahter = {
     setting: {
         caseSetting: {
             lowerCamelCase: true,
-            lowerSnakeCase: true,
-            upperCamelCase: true,
+            lowerSnakeCase: false,
+            upperCamelCase: false,
             upperSnakeCase: true
         }
     }

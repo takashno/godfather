@@ -1,5 +1,6 @@
 import { SETTING } from "./actions";
 import initialState from "../store/initialState";
+import { SettingAction } from "../../Types";
 
 /**
  * 設定Reducers
@@ -7,7 +8,7 @@ import initialState from "../store/initialState";
  * @param {*} action 
  * @returns 
  */
-const settingReducer = (state = initialState.setting, action) => {
+const settingReducer = (state = initialState.setting, action: SettingAction) => {
     switch (action.type) {
         case SETTING:
             return {

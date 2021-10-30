@@ -1,4 +1,4 @@
-import { SettingObj } from "../../Types";
+import { SettingAction, SettingObj } from "../../Types";
 
 export const SETTING = "SETTING";
 
@@ -7,11 +7,9 @@ export const SETTING = "SETTING";
  * @param {*} caseSetting 
  * @returns 
  */
-export const settingAction = (caseSetting: SettingObj) => {
-    return {
-        type: SETTING,
-        payload: {
-            caseSetting: caseSetting
-        }
-    };
-};
+export const settingAction = (caseSetting: SettingObj): SettingAction => ({
+    type: SETTING,
+    payload: {
+        caseSetting: caseSetting
+    }
+});

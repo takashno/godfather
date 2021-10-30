@@ -77,6 +77,7 @@ export interface Godfahter {
 
 export const REGIST_WORDS: 'REGIST_WORDS' = 'REGIST_WORDS';
 export const NAMING: 'NAMING' = 'NAMING';
+export const SETTING: 'SETTING' = 'SETTING';
 
 
 export interface RegistWordsAction extends Action {
@@ -93,4 +94,9 @@ export interface NamingAction extends Action {
         target: string[];
         results: NamingResult[];
     }
+}
+
+export interface SettingAction extends Action {
+    type: typeof SETTING;
+    payload: Setting;
 }
