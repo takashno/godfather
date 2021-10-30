@@ -1,5 +1,6 @@
 
-import {Godfahter} from "../../Types"
+import { waitForDomChange } from "@testing-library/react";
+import { Godfahter } from "../../Types"
 
 const initialState: Godfahter = {
     naming: {
@@ -40,6 +41,19 @@ const initialState: Godfahter = {
                     converted: "変換後"
                 }
             ]
+        }
+    },
+    libraryRegistration: {
+        target: {
+            word: "登録対象ワード",
+            converted: "変換後ワード"
+        },
+        result: {
+            status: "ステータス",
+            target: {
+                word: "登録対象ワード",
+                converted: "変換後ワード"
+            }
         }
     },
     setting: {

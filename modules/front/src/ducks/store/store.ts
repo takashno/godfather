@@ -9,6 +9,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import NamingReducer from '../naming/reducers';
 import settingReducer from '../setting/reducers';
 import LibraryReducer from '../library/reducers';
+import LibraryRegistrationReducer from '../libraryRegistration/reducers'
 import { History } from 'history';
 
 // 現在どこのページにいるのか？というような情報を持っているのがhistory
@@ -18,7 +19,8 @@ export const createStore = (history: History) => {
             router: connectRouter(history),
             naming: NamingReducer,
             setting: settingReducer,
-            registedWords: LibraryReducer
+            registedWords: LibraryReducer,
+            libraryRegistration: LibraryRegistrationReducer
         }),
         applyMiddleware(
             routerMiddleware(history),

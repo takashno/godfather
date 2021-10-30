@@ -1,6 +1,8 @@
 import React from 'react'
 import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import UIkit from 'uikit';
 import { registedWordsOperation } from '../../ducks/library/operations'
 import { Godfahter, Pagination, RegistedWords } from '../../Types';
 import Header from '../organisms/Header'
@@ -14,10 +16,13 @@ const Library = () => {
     const selector = useSelector((state: Godfahter) => state);
 
     useLayoutEffect(() => {
+        // モーダルを有効化する
+        UIkit.modal('#modal-library-registration');
         // 画面遷移時に入力をクリアする
         dispath(registedWordsOperation(10, 1));
         return () => {
             console.log("Unmount....");
+            // document.querySelector('#modal-library-registration')?.remove();
         }
     }, []);
 
@@ -26,7 +31,6 @@ const Library = () => {
     }
 
     const paginationEffect = (page: number, event: React.MouseEvent<HTMLElement>) => {
-        console.log(event);
         event.preventDefault();
         // 画面遷移時に入力をクリアする
         dispath(registedWordsOperation(10, page));
@@ -94,12 +98,41 @@ const Library = () => {
     return (
         <React.Fragment>
             <Header />
+            <div id="modal-library-registration" uk-modal>
+                <div className="uk-modal-dialog">
+                    <div className="uk-modal-header">
+                        <h2 className="uk-modal-title">New&nbsp;Word</h2>
+                    </div>
+
+                    <div className="uk-modal-body">
+                        <form className="uk-form-horizontal uk-margin-large">
+                            <div className="uk-margin">
+                                <label className="uk-form-label" >登録ワード</label>
+                                <div className="uk-form-controls">
+                                    <input className="uk-input" id="form-horizontal-text" type="text" placeholder="変換前" />
+                                </div>
+                            </div>
+                            <div className="uk-margin">
+                                <label className="uk-form-label" >変換ワード</label>
+                                <div className="uk-form-controls">
+                                    <input className="uk-input" id="form-horizontal-text" type="text" placeholder="変換後" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="uk-modal-footer uk-text-right">
+                        <button className="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button className="uk-button uk-button-primary" type="button">Regist</button>
+                    </div>
+                </div>
+            </div>
             <div className="uk-container">
                 <u><i><h2>Library</h2></i></u>
                 <div className="uk-grid">
                     <div className="uk-with-1-1">
                         <div className="uk-with-1-1">
-                            <button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right">新規登録</button>
+                            {/*<Link to={`/library/registration`}><button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right">新規登録</button></Link>*/}
+                            <a href="#modal-library-registration" uk-toggle="target: #modal-library-registration"><button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right">新規登録</button></a>
                             <button className="uk-button uk-button-primary uk-button-small uk-margin-small-right">Download</button>
                             <button className="uk-button uk-button-danger uk-button-small">Upload</button>
                         </div>

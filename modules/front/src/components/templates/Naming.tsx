@@ -19,11 +19,15 @@ const Naming = () => {
     const COPY_TOOLTIP = 'コピーします.';
 
     useEffect(() => {
+        // モーダルを有効化する
         UIkit.modal('#modal-example');
         // 画面遷移時に入力をクリアする
         selector.naming = initialState.naming;
-
-    });
+        return () => {
+            console.log("Unmount....");
+            // document.querySelector('#modal-example')?.remove();
+        }
+    }, []);
 
     /**
      * 入力ハンドラ.

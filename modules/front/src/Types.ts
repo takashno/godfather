@@ -62,6 +62,17 @@ export interface RegistedWords {
     results: RegistWordsResult;
 }
 
+export interface LibraryRegistrationResult {
+    status: string;
+    target: Word;
+
+}
+
+export interface LibraryRegistration {
+    target: Word;
+    result: LibraryRegistrationResult;
+}
+
 export interface Setting {
     caseSetting: SettingObj;
 }
@@ -72,12 +83,14 @@ export interface Setting {
 export interface Godfahter {
     naming: Naming;
     registedWords: RegistedWords;
+    libraryRegistration: LibraryRegistration;
     setting: Setting;
 }
 
 export const REGIST_WORDS: 'REGIST_WORDS' = 'REGIST_WORDS';
 export const NAMING: 'NAMING' = 'NAMING';
 export const SETTING: 'SETTING' = 'SETTING';
+export const LIBRARY_REGISTRATION: 'LIBRARY_REGISTRATION' = 'LIBRARY_REGISTRATION';
 
 
 export interface RegistWordsAction extends Action {
@@ -99,4 +112,9 @@ export interface NamingAction extends Action {
 export interface SettingAction extends Action {
     type: typeof SETTING;
     payload: Setting;
+}
+
+export interface LibraryRegistrationAction extends Action {
+    type: typeof LIBRARY_REGISTRATION;
+    payload: LibraryRegistration;
 }
