@@ -4,15 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { namingOperation } from '../../ducks/naming/operations';
 import initialState from '../../ducks/store/initialState';
 import Header from '../organisms/Header'
-import async from 'async'
+import { Godfahter } from '../../Types';
+import UIkit from 'uikit';
 
 /**
  * ネーミング機能コンポーネント.
  */
-const Naming = (props) => {
+const Naming = () => {
 
     const dispath = useDispatch();
-    const selector = useSelector(state => state);
+    const selector = useSelector((state: Godfahter) => state);
     const settingSelector = selector.setting;
     const caseSettingSelector = settingSelector.caseSetting;
     const COPY_TOOLTIP = 'コピーします.';
@@ -20,13 +21,15 @@ const Naming = (props) => {
     useEffect(() => {
         // 画面遷移時に入力をクリアする
         selector.naming = initialState.naming;
-        console.log(selector.library)
-    });
+        return () => {
+            console.log("Unmount....");
+        }
+    }, []);
 
     /**
      * 入力ハンドラ.
      */
-    const handleChange = (event) => {
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         dispath(namingOperation(
             event.target.value,
             caseSettingSelector.lowerCamelCase,
@@ -35,20 +38,25 @@ const Naming = (props) => {
             caseSettingSelector.upperSnakeCase));
     }
 
-    const copyText = (target) => {
-        navigator.clipboard.writeText(document.querySelector('#' + target).innerText);
+    const copyText = (target: string) => {
+        const element: HTMLElement = document.querySelector('#' + target)!;
+        navigator.clipboard.writeText(element.innerText);
     }
 
-    const tableHeaderStyle = {
+    const linkStyleNone: React.CSSProperties = {
+        textDecoration: 'none'
+    }
+
+    const tableHeaderStyle: React.CSSProperties = {
         textTransform: 'none'
     }
 
-    const missingsStyle = {
+    const missingsStyle: React.CSSProperties = {
         color: 'red'
     }
 
     // 結果セル用
-    const renderTableTd = (value, index, idPrefix) => {
+    const renderTableTd = (value: string, index: number, idPrefix: string) => {
         const tableTd = (
             <React.Fragment>
                 <span id={idPrefix + index}>{value}</span>
@@ -67,15 +75,18 @@ const Naming = (props) => {
         }
     }
 
-    const missingTableTd = (missing) => {
+    const missingTableTd = (missings: string[]) => {
         let missingStr = "";
-        async.each(missing, (x) => {
-            if (missingStr === "") {
-                missingStr = x;
-            } else {
-                missingStr = missingStr + ", " + x;
-            }
-        })
+        // undefinedとnullを除外
+        if (missings != null) {
+            missings.forEach((x: string) => {
+                if (missingStr === "") {
+                    missingStr = x;
+                } else {
+                    missingStr = missingStr + ", " + x;
+                }
+            })
+        }
         return (missingStr);
     }
 
@@ -113,7 +124,7 @@ const Naming = (props) => {
      */
     const renderTable = () => {
         const table =
-            <table class="uk-table uk-table-small uk-table-hover">
+            <table className="uk-table uk-table-small uk-table-hover">
                 <thead>
                     <tr>
                         <th style={tableHeaderStyle}>Target Word</th>
@@ -138,46 +149,31 @@ const Naming = (props) => {
     return (
         <React.Fragment>
             <Header />
-            <div class="uk-container">
-                <u><i><h2>Naming</h2></i></u>
-                <div class="uk-grid">
-                    <div class="uk-with-1-1">
+            <div className="uk-container">
+                <h2><u><i>Naming</i></u></h2>
+                <div className="uk-grid">
+                    <div className="uk-with-1-1">
                         <p>
                             命名対象のワードを&nbsp;<strong>Target</strong>&nbsp;へ入力すると、辞書に登録されている情報に基づいて変換した結果を&nbsp;<strong>Naming&nbsp;Result</strong>&nbsp;へ表示します.<br />
                             変換はまず入力された文字列から名詞と考えられる言葉のみを抽出し、変換対象文字列として構築します.<br />
                             その後に名詞ごとに登録辞書に対して検索をかけて変換を行います.<br />
                             辞書変換に失敗した文字列は、&nbsp;<strong>Missing</strong>&nbsp;に表示されます. 不足している単語は&nbsp;<strong>Library</strong>&nbsp;機能から登録してください。<br />
-                            <u>※&nbsp;この画面への入力は別ページに移動すると消えます. 残したい場合は、コピーしておいてください.</u><br />
+                            <u>※&nbsp;<strong>Target</strong>&nbsp;への入力は別ページに移動すると消えます. 残したい場合は、コピーしておいてください.</u><br />
                         </p>
                     </div>
                 </div>
-                { /*　Optionは別画面に切り出すことにした
-                <div class="uk-grid">
-                    <div class="uk-with-1-1">
-                        <h4>
-                            <strong>Options&nbsp;<span uk-icon="question" uk-tooltip="どの形式の出力を行うかのオプションです."></span></strong>
-                        </h4>
-                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                            <label><input id="lowerCamelCase" class="uk-checkbox" type="checkbox" checked={caseSettingSelector.lowerCamelCase} />&nbsp;LowerCamelCase</label>
-                            <label><input id="lowerSnakeCase" class="uk-checkbox" type="checkbox" checked={caseSettingSelector.lowerSnakeCase}/>&nbsp;LowerSnakeCase</label>
-                            <label><input id="upperCamelCase" class="uk-checkbox" type="checkbox" checked={caseSettingSelector.upperCamelCase} />&nbsp;UpperCamelCase</label>
-                            <label><input id="upperSnakeCase" class="uk-checkbox" type="checkbox" checked={caseSettingSelector.upperSnakeCase} />&nbsp;UpperSnakeCase</label>
-                        </div>
-                    </div>
-                </div>
-                */ }
-                <div class="uk-grid">
-                    <div class="uk-width-1-1 uk-margin-bottom">
+                <div className="uk-grid">
+                    <div className="uk-width-1-1 uk-margin-bottom">
                         <h4>
                             <strong>Target&nbsp;<span uk-icon="question" uk-tooltip="対象のワードを記載します.<br/>改行して複数指定可能です.<br/>その場合、１行毎を別の対象と捉えます."></span></strong>
                         </h4>
-                        <textarea id="target" class="uk-textarea uk-form-width-large" rows="5" onChange={handleChange} />
+                        <textarea id="target" className="uk-textarea uk-form-width-large" rows={5} onChange={(e) => handleChange(e)} />
                     </div>
-                    <div class="uk-width-1-1 ">
+                    <div className="uk-width-1-1 ">
                         <h4>
                             <strong>Naming&nbsp;Result&nbsp;<span uk-icon="question" uk-tooltip="ネーミング結果を表で表します."></span></strong>
                         </h4>
-                        <div class="uk-overflow-auto">
+                        <div className="uk-overflow-auto">
                             {renderTable()}
                         </div>
                     </div>
@@ -186,20 +182,5 @@ const Naming = (props) => {
         </React.Fragment>
     );
 };
-
-// const mapStateToProps = state => {
-//     return {
-//         naming: state.naming
-//     };
-// };
-
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         namingOperation: (target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase) =>
-//             dispatch(namingOperation(target, lowerCamelCase, lowerSnakeCase, upperCamelCase, upperSnakeCase)),
-//     };
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Naming);
 
 export default Naming;

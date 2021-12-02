@@ -1,4 +1,8 @@
-const initialState = {
+
+import { waitForDomChange } from "@testing-library/react";
+import { Godfahter } from "../../Types"
+
+const initialState: Godfahter = {
     naming: {
         target: ['対象を入力してください.命名したいワード'],
         results: [
@@ -6,7 +10,7 @@ const initialState = {
                 status: "ステータス",
                 target: "対象のワード",
                 convertTarget: "変換対象の文字",
-                missing: [
+                missings: [
                     "変換できなかった文字"
                 ],
                 lowerCamelCase: "lowerCamelCase変換文字",
@@ -39,11 +43,31 @@ const initialState = {
             ]
         }
     },
+    libraryRegistration: {
+        target: {
+            words: [{
+                word: "登録対象ワード",
+                converted: "変換後ワード"
+            }]
+        },
+        results: [/*{
+            status: "success",
+            failureReason: "",
+            word: "登録対象ワード",
+            converted: "変換後ワード"
+        },
+        {
+            status: "fail",
+            failureReason: "duplicate",
+            word: "登録対象ワード",
+            converted: "変換後ワード"
+        }*/]
+    },
     setting: {
         caseSetting: {
             lowerCamelCase: true,
-            lowerSnakeCase: true,
-            upperCamelCase: true,
+            lowerSnakeCase: false,
+            upperCamelCase: false,
             upperSnakeCase: true
         }
     }

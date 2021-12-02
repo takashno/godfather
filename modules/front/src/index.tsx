@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import ErrorBoundary from './ErrorBoundary'
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -14,7 +15,9 @@ export const store = createStore(history);
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
