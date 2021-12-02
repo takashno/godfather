@@ -45,6 +45,7 @@ const LibraryRegistration = () => {
             word.classList.remove('uk-form-danger');
             converted.classList.remove('uk-form-danger');
 
+            // 2度押し防止のため、登録ボタンを無効化する
             button.textContent = "Wait..."
             button.disabled = true;
 
@@ -53,7 +54,7 @@ const LibraryRegistration = () => {
                 word.value,
                 converted.value));
 
-            // 再度登録可能とする
+            // 登録ボタンを有効に戻す
             button.textContent = "Registration"
             button.disabled = false;
 
@@ -81,6 +82,7 @@ const LibraryRegistration = () => {
                     </React.Fragment>
                 )
             } else {
+                // ちょっと面倒だが、ここで出し分ける以外に今思いつかない…
                 if (selector.libraryRegistration.results[0].failureReason === 'duplicate') {
                     return (
                         <React.Fragment>
