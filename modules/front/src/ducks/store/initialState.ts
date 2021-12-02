@@ -45,16 +45,23 @@ const initialState: Godfahter = {
     },
     libraryRegistration: {
         target: {
+            words: [{
+                word: "登録対象ワード",
+                converted: "変換後ワード"
+            }]
+        },
+        results: [/*{
+            status: "success",
+            failureReason: "",
             word: "登録対象ワード",
             converted: "変換後ワード"
         },
-        result: {
-            status: "ステータス",
-            target: {
-                word: "登録対象ワード",
-                converted: "変換後ワード"
-            }
-        }
+        {
+            status: "fail",
+            failureReason: "duplicate",
+            word: "登録対象ワード",
+            converted: "変換後ワード"
+        }*/]
     },
     setting: {
         caseSetting: {

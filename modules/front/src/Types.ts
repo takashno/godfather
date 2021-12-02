@@ -62,15 +62,20 @@ export interface RegistedWords {
     results: RegistWordsResult;
 }
 
+export interface LibraryRegistrationRequest {
+    words: Word[];
+}
+
 export interface LibraryRegistrationResult {
     status: string;
-    target: Word;
-
+    failureReason: string;
+    word: string;
+    converted: string;
 }
 
 export interface LibraryRegistration {
-    target: Word;
-    result: LibraryRegistrationResult;
+    target: LibraryRegistrationRequest;
+    results: LibraryRegistrationResult[];
 }
 
 export interface Setting {
@@ -90,8 +95,10 @@ export interface Godfahter {
 export const REGIST_WORDS: 'REGIST_WORDS' = 'REGIST_WORDS';
 export const NAMING: 'NAMING' = 'NAMING';
 export const SETTING: 'SETTING' = 'SETTING';
-export const LIBRARY_REGISTRATION: 'LIBRARY_REGISTRATION' = 'LIBRARY_REGISTRATION';
-
+export const LIBRARY_REGISTRATION_ACTION_TYPES = {
+    INIT: "LIBRARY_REGISTRATION_INIT",
+    REGISTRATION: 'LIBRARY_REGISTRATION'
+}
 
 export interface RegistWordsAction extends Action {
     type: typeof REGIST_WORDS;
@@ -115,6 +122,6 @@ export interface SettingAction extends Action {
 }
 
 export interface LibraryRegistrationAction extends Action {
-    type: typeof LIBRARY_REGISTRATION;
+    type: String;
     payload: LibraryRegistration;
 }

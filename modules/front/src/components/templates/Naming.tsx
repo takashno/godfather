@@ -19,13 +19,10 @@ const Naming = () => {
     const COPY_TOOLTIP = 'コピーします.';
 
     useEffect(() => {
-        // モーダルを有効化する
-        UIkit.modal('#modal-example');
         // 画面遷移時に入力をクリアする
         selector.naming = initialState.naming;
         return () => {
             console.log("Unmount....");
-            // document.querySelector('#modal-example')?.remove();
         }
     }, []);
 
@@ -152,26 +149,17 @@ const Naming = () => {
     return (
         <React.Fragment>
             <Header />
-            <div id="modal-example" uk-modal>
-                <div className="uk-modal-dialog uk-modal-body">
-                    <h2 className="uk-modal-title">使い方</h2>
-                    <p>
-                        命名対象のワードを&nbsp;<strong>Target</strong>&nbsp;へ入力すると、辞書に登録されている情報に基づいて変換した結果を&nbsp;<strong>Naming&nbsp;Result</strong>&nbsp;へ表示します.<br />
-                        変換はまず入力された文字列から名詞と考えられる言葉のみを抽出し、変換対象文字列として構築します.<br />
-                        その後に名詞ごとに登録辞書に対して検索をかけて変換を行います.<br />
-                        辞書変換に失敗した文字列は、&nbsp;<strong>Missing</strong>&nbsp;に表示されます. 不足している単語は&nbsp;<strong>Library</strong>&nbsp;機能から登録してください。<br />
-                        <u>※&nbsp;<strong>Target</strong>&nbsp;への入力は別ページに移動すると消えます. 残したい場合は、コピーしておいてください.</u><br />
-                    </p>
-                    <p className="uk-text-right">
-                        <button className="uk-button uk-button-primary uk-modal-close" type="button">OK</button>
-                    </p>
-                </div>
-            </div>
             <div className="uk-container">
                 <h2><u><i>Naming</i></u></h2>
                 <div className="uk-grid">
                     <div className="uk-with-1-1">
-                        <p>簡単な利用方法は&nbsp;<a href="#modal-example" style={linkStyleNone} uk-toggle="target: #modal-example">こちら</a>&nbsp;を確認ください。</p>
+                        <p>
+                            命名対象のワードを&nbsp;<strong>Target</strong>&nbsp;へ入力すると、辞書に登録されている情報に基づいて変換した結果を&nbsp;<strong>Naming&nbsp;Result</strong>&nbsp;へ表示します.<br />
+                            変換はまず入力された文字列から名詞と考えられる言葉のみを抽出し、変換対象文字列として構築します.<br />
+                            その後に名詞ごとに登録辞書に対して検索をかけて変換を行います.<br />
+                            辞書変換に失敗した文字列は、&nbsp;<strong>Missing</strong>&nbsp;に表示されます. 不足している単語は&nbsp;<strong>Library</strong>&nbsp;機能から登録してください。<br />
+                            <u>※&nbsp;<strong>Target</strong>&nbsp;への入力は別ページに移動すると消えます. 残したい場合は、コピーしておいてください.</u><br />
+                        </p>
                     </div>
                 </div>
                 <div className="uk-grid">

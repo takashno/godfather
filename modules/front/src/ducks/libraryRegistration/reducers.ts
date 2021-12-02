@@ -1,4 +1,5 @@
-import { LibraryRegistrationAction, LIBRARY_REGISTRATION } from "../../Types";
+import { act } from "react-dom/test-utils";
+import { LibraryRegistrationAction, LIBRARY_REGISTRATION_ACTION_TYPES} from "../../Types";
 import initialState from "../store/initialState";
 
 /**
@@ -9,13 +10,15 @@ import initialState from "../store/initialState";
  */
 const LibraryRegistrationReducer = (state = initialState.libraryRegistration, action: LibraryRegistrationAction) => {
     switch (action.type) {
-        case LIBRARY_REGISTRATION:
+        case LIBRARY_REGISTRATION_ACTION_TYPES.INIT:
             return {
                 target: action.payload.target,
-                result: {
-                    status: action.payload.result.status,
-                    target: action.payload.result.target
-                }
+                results: action.payload.results
+            }
+        case LIBRARY_REGISTRATION_ACTION_TYPES.REGISTRATION:
+            return {
+                target: action.payload.target,
+                results: action.payload.results
             }
         default:
             return state;

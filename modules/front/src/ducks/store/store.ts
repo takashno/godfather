@@ -2,7 +2,8 @@
 import {
     createStore as reduxCreateStore,
     combineReducers,
-    applyMiddleware
+    applyMiddleware,
+    compose
 } from 'redux';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router'
@@ -11,6 +12,14 @@ import settingReducer from '../setting/reducers';
 import LibraryReducer from '../library/reducers';
 import LibraryRegistrationReducer from '../libraryRegistration/reducers'
 import { History } from 'history';
+
+interface ExtendedWindow extends Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+  declare var window: ExtendedWindow;
+  
+  const composeReduxDevToolsEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  
 
 // 現在どこのページにいるのか？というような情報を持っているのがhistory
 export const createStore = (history: History) => {
@@ -22,9 +31,9 @@ export const createStore = (history: History) => {
             registedWords: LibraryReducer,
             libraryRegistration: LibraryRegistrationReducer
         }),
-        applyMiddleware(
+        composeReduxDevToolsEnhancers(applyMiddleware(
             routerMiddleware(history),
             thunk
-        )
+        ))
     )
 }
