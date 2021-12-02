@@ -60,3 +60,18 @@ func (pc LibraryController) RegistWords(c *gin.Context) {
 	// メッセージ返却
 	c.JSON(http.StatusOK, result)
 }
+
+func (pc LibraryController) DownloadLibrary(c *gin.Context) {
+
+	request := model.DownloadLibraryRequest{}
+
+	libraryService := service.LibraryService{}
+	response, err := libraryService.DownloadLibrary(&request)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err})
+		return
+	}
+	m := http.DetectContentType(response.Contents[:512])
+	c.Header("Content-Disposition", "attachment; filename=library.yaml")
+	c.Data(http.StatusOK, m, response.Contents)
+}

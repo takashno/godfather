@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"os"
 	"sort"
 
 	"github.com/takashno/godfather/tree/main/modules/back/library"
@@ -107,4 +108,14 @@ func (LibraryService) RegistWords(request *model.RegistWordsRequest) (model.Regi
 
 	return *registWordsRespose, nil
 
+}
+
+func (LibraryService) DownloadLibrary(request *model.DownloadLibraryRequest) (model.DownloadLibraryRespose, error) {
+	downloadLibraryResponse := new(model.DownloadLibraryRespose)
+	contents, err := os.ReadFile("./library.yaml")
+	if err != nil {
+		return *downloadLibraryResponse, err
+	}
+	downloadLibraryResponse.Contents = contents
+	return *downloadLibraryResponse, nil
 }

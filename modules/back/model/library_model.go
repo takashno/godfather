@@ -8,6 +8,9 @@ type RegistWordsRequest struct {
 	Words []Word `json:"words"`
 }
 
+type DownloadLibraryRequest struct {
+}
+
 type LibraryListRespose struct {
 	Words      []Word             `json:"words"`
 	Pagination PaginationResponse `json:"pagination"`
@@ -15,6 +18,10 @@ type LibraryListRespose struct {
 
 type RegistWordsRespose struct {
 	Words []WordRegistResult `json:"words"`
+}
+
+type DownloadLibraryRespose struct {
+	Contents []byte
 }
 
 // /library/list API Response Model.
