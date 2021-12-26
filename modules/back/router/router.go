@@ -34,6 +34,7 @@ func inintRoute() *gin.Engine {
 		AllowOrigins: []string{
 			"http://localhost:3001",
 			"http://localhost:3002",
+			"http://localhost:52709",
 		},
 		// アクセスを許可したいHTTPメソッド(以下の例だとPUTやDELETEはアクセスできません)
 		AllowMethods: []string{

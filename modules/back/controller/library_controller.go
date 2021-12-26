@@ -61,6 +61,7 @@ func (pc LibraryController) RegistWords(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
+// ライブラリ定義のYAMLをダウンロード
 func (pc LibraryController) DownloadLibrary(c *gin.Context) {
 
 	request := model.DownloadLibraryRequest{}

@@ -2,7 +2,6 @@ import React from 'react'
 import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import UIkit from 'uikit';
 import { registedWordsOperation } from '../../ducks/library/operations'
 import { Godfahter, Pagination, RegistedWords } from '../../Types';
 import Header from '../organisms/Header'
@@ -16,8 +15,8 @@ const Library = () => {
     const selector = useSelector((state: Godfahter) => state);
 
     useLayoutEffect(() => {
-        // モーダルを有効化する
-        UIkit.modal('#modal-library-registration');
+        console.log(process.env.REACT_APP_BACKEND_HOST);
+        console.log(process.env.REACT_APP_OVER);
         // 画面遷移時に入力をクリアする
         dispath(registedWordsOperation(10, 1));
         return () => {
@@ -104,7 +103,7 @@ const Library = () => {
                     <div className="uk-with-1-1">
                         <div className="uk-with-1-1">
                             <Link to={`/library/registration`}><button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right">新規登録</button></Link>
-                            <button className="uk-button uk-button-primary uk-button-small uk-margin-small-right">Download</button>
+                            <a href="http://localhost:3000/library/download"><button className="uk-button uk-button-primary uk-button-small uk-margin-small-right">Download</button></a>
                             <button className="uk-button uk-button-danger uk-button-small">Upload</button>
                         </div>
                     </div>
