@@ -21,6 +21,7 @@ type Library interface {
 	WordKeys() []string
 	ToYamlString() string
 	ToYamlBytes() []byte
+	Load(filePath string)
 }
 
 // 値保持のための構造体
@@ -35,6 +36,11 @@ func newLibrary() *library {
 	lib.words = make(map[string]string)
 	lib.reservedWords = make(map[string]string)
 	return lib
+}
+
+func renewLibrary() {
+	instance.words = make(map[string]string)
+	instance.reservedWords = make(map[string]string)
 }
 
 // シングルトンインスタンス
@@ -129,6 +135,35 @@ func (c *library) ToYamlBytes() []byte {
 	return d
 }
 
+// 指定されたライブラリをロードする.
+func (c *library) Load(filePath string) {
+
+	logger, err := zap.NewProduction()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	logger.Info("start library load.")
+
+	// YAMLを読み込むための構造体を生成
+	libraryFile := model.YamlLibraryFile{}
+
+	// ファイル読み込み
+	b, _ := os.ReadFile(filePath)
+	yaml.Unmarshal(b, &libraryFile)
+
+	// 保持するためのライブラリを生成
+	library := GetLibrary()
+	renewLibrary()
+
+	// ライブラリへ読み込んだ情報を登録
+	for _, v := range libraryFile.Words {
+		library.RegistWord(v.Word, v.Converteds[0].Converted)
+		logger.Info("word : " + v.Word + " converted : " + v.Converteds[0].Converted)
+	}
+	logger.Info("end library load.")
+}
+
 /* ------------------------------------------------ */
 
 // ライブラリ初期化処理
@@ -141,20 +176,11 @@ func Init() {
 
 	logger.Info("start library initialize.")
 
-	// YAMLを読み込むための構造体を生成
-	libraryFile := model.YamlLibraryFile{}
-
-	// ファイル読み込み（TODO：環境変数対応）
-	b, _ := os.ReadFile("./library.yaml")
-	yaml.Unmarshal(b, &libraryFile)
-
-	// 保持するためのライブラリを生成
+	// ライブラリを生成
 	library := GetLibrary()
 
-	// ライブラリへ読み込んだ情報を登録
-	for _, v := range libraryFile.Words {
-		library.RegistWord(v.Word, v.Converteds[0].Converted)
-		logger.Info("word : " + v.Word + " converted : " + v.Converteds[0].Converted)
-	}
+	// ロード
+	library.Load("./library.yaml")
+
 	logger.Info("end library initialize.")
 }

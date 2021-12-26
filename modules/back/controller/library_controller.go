@@ -1,7 +1,10 @@
 package controller
 
 import (
+	"io"
+	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -75,4 +78,31 @@ func (pc LibraryController) DownloadLibrary(c *gin.Context) {
 	m := http.DetectContentType(response.Contents[:512])
 	c.Header("Content-Disposition", "attachment; filename=library.yaml")
 	c.Data(http.StatusOK, m, response.Contents)
+}
+
+func (pc LibraryController) UploadLibrary(c *gin.Context) {
+	file, header, err := c.Request.FormFile("library")
+	if err != nil {
+		c.String(http.StatusBadRequest, "Bad request")
+		return
+	}
+	fileName := header.Filename
+	dir, _ := os.Getwd()
+	filePath := dir + "\\library\\" + fileName
+	out, err := os.Create(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer out.Close()
+	_, err = io.Copy(out, file)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	libraryService := service.LibraryService{}
+	libraryService.UploadLibrary(filePath)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+	})
 }

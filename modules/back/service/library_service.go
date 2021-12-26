@@ -117,3 +117,8 @@ func (LibraryService) DownloadLibrary(request *model.DownloadLibraryRequest) (mo
 	downloadLibraryResponse.Contents = contents
 	return *downloadLibraryResponse, nil
 }
+
+func (LibraryService) UploadLibrary(filePath string) {
+	library := library.GetLibrary()
+	library.Load(filePath)
+}
