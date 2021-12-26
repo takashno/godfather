@@ -68,8 +68,7 @@ func (c *library) RegistReservedWord(key string, value string) {
 
 func (c *library) WordKeys() []string {
 	ks := []string{}
-	for k, _ := range c.words {
-
+	for k := range c.words {
 		ks = append(ks, k)
 	}
 	// Keyでソートして返却する.
