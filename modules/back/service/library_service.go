@@ -2,7 +2,6 @@ package service
 
 import (
 	"fmt"
-	"os"
 	"sort"
 
 	"github.com/takashno/godfather/tree/main/modules/back/library"
@@ -15,11 +14,6 @@ type LibraryService struct{}
 func (LibraryService) LibraryList(request *model.LibraryListRequest) (model.LibraryListRespose, error) {
 
 	library := library.GetLibrary()
-
-	// logger, err := zap.NewProduction()
-	// if err != nil {
-	// 	log.Fatal(err.Error())
-	// }
 
 	// 返却モデル
 	response := new(model.LibraryListRespose)
@@ -112,10 +106,14 @@ func (LibraryService) RegistWords(request *model.RegistWordsRequest) (model.Regi
 
 func (LibraryService) DownloadLibrary(request *model.DownloadLibraryRequest) (model.DownloadLibraryRespose, error) {
 	downloadLibraryResponse := new(model.DownloadLibraryRespose)
-	contents, err := os.ReadFile("./library.yaml")
-	if err != nil {
-		return *downloadLibraryResponse, err
-	}
+	// ファイルを直接見ても新たに登録されたワードは見れないからオンメモのライブラリから直接取得するように修正
+	// contents, err := os.ReadFile("./library.yaml")
+	// if err != nil {
+	// 	return *downloadLibraryResponse, err
+	// }
+	// downloadLibraryResponse.Contents = contents
+	library := library.GetLibrary()
+	contents := library.ToYamlBytes()
 	downloadLibraryResponse.Contents = contents
 	return *downloadLibraryResponse, nil
 }

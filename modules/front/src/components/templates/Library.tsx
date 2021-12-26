@@ -3,6 +3,7 @@ import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { registedWordsOperation } from '../../ducks/library/operations'
+import { backendHost } from '../../ducks/utils/envUtils';
 import { Godfahter, Pagination, RegistedWords } from '../../Types';
 import Header from '../organisms/Header'
 
@@ -15,18 +16,24 @@ const Library = () => {
     const selector = useSelector((state: Godfahter) => state);
 
     useLayoutEffect(() => {
-        console.log(process.env.REACT_APP_BACKEND_HOST);
-        console.log(process.env.REACT_APP_OVER);
         // 画面遷移時に入力をクリアする
         dispath(registedWordsOperation(10, 1));
         return () => {
-            console.log("Unmount....");
+            // console.log("Unmount....");
             // document.querySelector('#modal-library-registration')?.remove();
         }
     }, []);
 
     const tableHeaderStyle: React.CSSProperties = {
         textTransform: 'none'
+    }
+
+    /**
+     * 辞書ダウンロードURLを取得.
+     * @returns 
+     */
+    const libraryDownloadUrl = (): string => {
+        return backendHost() + "/library/download";
     }
 
     const paginationEffect = (page: number, event: React.MouseEvent<HTMLElement>) => {
@@ -102,9 +109,9 @@ const Library = () => {
                 <div className="uk-grid">
                     <div className="uk-with-1-1">
                         <div className="uk-with-1-1">
-                            <Link to={`/library/registration`}><button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right">新規登録</button></Link>
-                            <a href="http://localhost:3000/library/download"><button className="uk-button uk-button-primary uk-button-small uk-margin-small-right">Download</button></a>
-                            <button className="uk-button uk-button-danger uk-button-small">Upload</button>
+                            <Link to={`/library/registration`}><button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right">New&nbsp;Word</button></Link>
+                            <a href={libraryDownloadUrl()}><button className="uk-button uk-button-primary uk-button-small uk-margin-small-right">Library&nbsp;Download</button></a>
+                            <button className="uk-button uk-button-danger uk-button-small">Library&nbsp;Upload</button>
                         </div>
                     </div>
                 </div>

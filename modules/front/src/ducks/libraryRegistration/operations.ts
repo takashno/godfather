@@ -2,6 +2,7 @@ import { libraryRegistrationAction } from './actions'
 import axios from 'axios'
 import { Action, Dispatch } from 'redux';
 import { Godfahter, Word } from '../../Types';
+import { backendHost } from '../utils/envUtils';
 
 export const libraryRegistrationOperation = (
     word: string,
@@ -18,9 +19,9 @@ export const libraryRegistrationOperation = (
             words: registWords
         };
         console.log('library/registration start.');
-        const respose = await axios.post('http://localhost:3000/library/registration', request);
+        const respose = await axios.post(backendHost() + '/library/registration', request);
         console.log('library/registration end.');
         console.log(respose.data);
-        dispach(libraryRegistrationAction(request, respose.data.words));   
+        dispach(libraryRegistrationAction(request, respose.data.words));
     }
 }

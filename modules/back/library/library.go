@@ -19,6 +19,8 @@ type Library interface {
 	ResolveReservedWord(key string) (string, bool)
 	RegistReservedWord(key string, value string)
 	WordKeys() []string
+	ToYamlString() string
+	ToYamlBytes() []byte
 }
 
 // 値保持のための構造体
@@ -73,6 +75,59 @@ func (c *library) WordKeys() []string {
 	// Keyでソートして返却する.
 	sort.SliceStable(ks, func(i, j int) bool { return ks[i] < ks[j] })
 	return ks
+}
+
+// ライブラリをYAML形式の文字列で取得.
+func (c *library) ToYamlString() string {
+
+	// YAMLを出力するための構造体を生成
+	libraryFile := model.YamlLibraryFile{}
+
+	// 登録されているWordを全て処理
+	for _, word := range c.WordKeys() {
+		yamlConvert := new(model.YamlConvert)
+		// 変換後文字列解決
+		converted, _ := c.ResolveWord(word)
+		yamlConvert.Converted = converted
+		// TODO：現状固定…
+		yamlConvert.Locale = "en"
+		yamlConverts := []model.YamlConvert{}
+		yamlConverts = append(yamlConverts, *yamlConvert)
+		yamlWord := new(model.YamlWord)
+		yamlWord.Converteds = yamlConverts
+		yamlWord.Word = word
+		libraryFile.Words = append(libraryFile.Words, *yamlWord)
+	}
+
+	d, _ := yaml.Marshal(&libraryFile)
+	result := string(d)
+	return result
+}
+
+// ライブラリをYAML形式のByte配列で取得.
+func (c *library) ToYamlBytes() []byte {
+
+	// YAMLを出力するための構造体を生成
+	libraryFile := model.YamlLibraryFile{}
+
+	// 登録されているWordを全て処理
+	for _, word := range c.WordKeys() {
+		yamlConvert := new(model.YamlConvert)
+		// 変換後文字列解決
+		converted, _ := c.ResolveWord(word)
+		yamlConvert.Converted = converted
+		// TODO：現状固定…
+		yamlConvert.Locale = "en"
+		yamlConverts := []model.YamlConvert{}
+		yamlConverts = append(yamlConverts, *yamlConvert)
+		yamlWord := new(model.YamlWord)
+		yamlWord.Converteds = yamlConverts
+		yamlWord.Word = word
+		libraryFile.Words = append(libraryFile.Words, *yamlWord)
+	}
+
+	d, _ := yaml.Marshal(&libraryFile)
+	return d
 }
 
 /* ------------------------------------------------ */
