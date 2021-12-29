@@ -112,6 +112,10 @@ const Library = () => {
                             <Link to={`/library/registration`}><button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right">New&nbsp;Word</button></Link>
                             <a href={libraryDownloadUrl()}><button className="uk-button uk-button-primary uk-button-small uk-margin-small-right">Library&nbsp;Download</button></a>
                             <button className="uk-button uk-button-danger uk-button-small">Library&nbsp;Upload</button>
+                            <div className="js-upload" uk-form-custom>
+                                <input type="file" multiple />
+                                <button className ="uk-button uk-button-default" type ="button">Select</button>
+                            </div>
                         </div>
                     </div>
                 </div>
