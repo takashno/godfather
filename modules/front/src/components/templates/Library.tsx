@@ -2,8 +2,11 @@ import React from 'react'
 import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import UIkit from 'uikit';
 import { registedWordsOperation } from '../../ducks/library/operations'
+import { libraryUploadInitAction } from '../../ducks/libraryUpload/actions';
+import { libraryUploadOperation } from '../../ducks/libraryUpload/operations';
+import initialState from '../../ducks/store/initialState';
+import { backendHost } from '../../ducks/utils/envUtils';
 import { Godfahter, Pagination, RegistedWords } from '../../Types';
 import Header from '../organisms/Header'
 
@@ -12,17 +15,17 @@ import Header from '../organisms/Header'
  */
 const Library = () => {
 
-    const dispath = useDispatch();
-    const selector = useSelector((state: Godfahter) => state);
+    const dispatch = useDispatch();
+    const selector: Godfahter = useSelector((state: Godfahter) => state);
+    const fileInput: React.RefObject<HTMLInputElement> = React.createRef()
 
     useLayoutEffect(() => {
-        // モーダルを有効化する
-        UIkit.modal('#modal-library-registration');
+        // 画面遷移時にアップロードのStateの初期化する
+        dispatch(libraryUploadInitAction(initialState.libraryUpload.result));
         // 画面遷移時に入力をクリアする
-        dispath(registedWordsOperation(10, 1));
+        dispatch(registedWordsOperation(10, 1));
         return () => {
-            console.log("Unmount....");
-            // document.querySelector('#modal-library-registration')?.remove();
+            // Nothing...
         }
     }, []);
 
@@ -30,11 +33,56 @@ const Library = () => {
         textTransform: 'none'
     }
 
+    /**
+     * 辞書ダウンロードURLを取得.
+     * @returns 
+     */
+    const libraryDownloadUrl = (): string => {
+        return backendHost() + "/library/download";
+    }
+
+    /**
+     * 辞書アップロード処理
+     * @param event 
+     */
+    const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault()
+        await dispatch(libraryUploadOperation(fileInput));
+        // 最新の辞書の1ページ目を表示する
+        await dispatch(registedWordsOperation(10, 1));
+    };
+
     const paginationEffect = (page: number, event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
-        // 画面遷移時に入力をクリアする
-        dispath(registedWordsOperation(10, page));
+        // アップロードの次点アクションがページネーションによる遷移の場合があるのでStateを初期化する
+        dispatch(libraryUploadInitAction(initialState.libraryUpload.result));
+        dispatch(registedWordsOperation(10, page));
     };
+
+    // Upload結果メッセージ
+    const uploadMessage = () => {
+        if (selector.libraryUpload.result.status) {
+            if (selector.libraryUpload.result.status === 'success') {
+                return (
+                    <React.Fragment>
+                        <div className="uk-margin">
+                            <h5 className="uk-text-success">辞書アップロードを正常に完了しました.</h5>
+                        </div>
+                    </React.Fragment>
+                )
+            } else {
+                return (
+                    <React.Fragment>
+                        <div className="uk-margin">
+                            <h5 className="uk-text-danger">辞書アップロードに失敗しました。</h5>
+                        </div>
+                    </React.Fragment>
+                )
+            }
+        } else {
+            return null;
+        }
+    }
 
     /**
      * 結果の行生成.
@@ -103,14 +151,18 @@ const Library = () => {
                 <div className="uk-grid">
                     <div className="uk-with-1-1">
                         <div className="uk-with-1-1">
-                            <Link to={`/library/registration`}><button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right">新規登録</button></Link>
-                            <button className="uk-button uk-button-primary uk-button-small uk-margin-small-right">Download</button>
-                            <button className="uk-button uk-button-danger uk-button-small">Upload</button>
+                            <Link to={`/library/registration`}><button className="uk-button uk-button-secondary uk-button-small uk-margin-small-right" uk-tooltip="title: 新規登録を行います。">New&nbsp;Word</button></Link>
+                            <a href={libraryDownloadUrl()}><button className="uk-button uk-button-primary uk-button-small uk-margin-small-right" uk-tooltip="title: 辞書ツールで現在保持しているワードの一覧をYAMLファイルでダウンロードします。">Library&nbsp;Download</button></a>
+                            <div className="js-upload uk-form-custom" uk-form-custom>
+                                <input type="file" ref={fileInput} accept=".yaml,.yml" onChange={(e) => handleChange(e)} uk-tooltip="pos: right;title: 登録を行うワードの一覧を記したYAMLファイルをアップロードする機能です。※辞書は全置き換えとなります。" />
+                                <button className="uk-button uk-button-danger uk-button-small" type="button">Library&nbsp;Upload</button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="uk-grid">
                     <div className="uk-width-1-1">
+                        {uploadMessage()}
                         <h4>
                             <strong>Registed&nbsp;Words&nbsp;<span uk-icon="question" uk-tooltip="辞書として登録されているワードの一覧です."></span></strong>
                         </h4>
@@ -127,7 +179,7 @@ const Library = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <ul className="uk-pagination uk-flex-center" uk-margin>
+                        <ul className="uk-pagination uk-flex-center">
                             {renderPaginationLi()}
                         </ul>
                     </div>

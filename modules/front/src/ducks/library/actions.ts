@@ -1,4 +1,4 @@
-import { Criteria, RegistWordsResult, REGIST_WORDS, RegistWordsAction } from "../../Types";
+import { Criteria, RegistWordsResult, LIBRARY_ACTION_TYPES, RegistWordsAction } from "../../Types";
 
 
 /**
@@ -7,7 +7,7 @@ import { Criteria, RegistWordsResult, REGIST_WORDS, RegistWordsAction } from "..
  * @returns 
  */
 export const registedWordsAction = (criteria: Criteria, results: RegistWordsResult): RegistWordsAction => ({
-    type: REGIST_WORDS,
+    type: LIBRARY_ACTION_TYPES.REGIST_WORDS,
     payload: {
         criteria: criteria,
         results: results

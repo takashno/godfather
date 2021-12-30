@@ -12,6 +12,7 @@ import settingReducer from '../setting/reducers';
 import LibraryReducer from '../library/reducers';
 import LibraryRegistrationReducer from '../libraryRegistration/reducers'
 import { History } from 'history';
+import LibraryUploadReducer from '../libraryUpload/reducers';
 
 interface ExtendedWindow extends Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
@@ -29,7 +30,8 @@ export const createStore = (history: History) => {
             naming: NamingReducer,
             setting: settingReducer,
             registedWords: LibraryReducer,
-            libraryRegistration: LibraryRegistrationReducer
+            libraryRegistration: LibraryRegistrationReducer,
+            libraryUpload: LibraryUploadReducer
         }),
         composeReduxDevToolsEnhancers(applyMiddleware(
             routerMiddleware(history),

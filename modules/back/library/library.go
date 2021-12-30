@@ -19,6 +19,9 @@ type Library interface {
 	ResolveReservedWord(key string) (string, bool)
 	RegistReservedWord(key string, value string)
 	WordKeys() []string
+	ToYamlString() string
+	ToYamlBytes() []byte
+	Load(filePath string)
 }
 
 // 値保持のための構造体
@@ -33,6 +36,11 @@ func newLibrary() *library {
 	lib.words = make(map[string]string)
 	lib.reservedWords = make(map[string]string)
 	return lib
+}
+
+func renewLibrary() {
+	instance.words = make(map[string]string)
+	instance.reservedWords = make(map[string]string)
 }
 
 // シングルトンインスタンス
@@ -66,13 +74,94 @@ func (c *library) RegistReservedWord(key string, value string) {
 
 func (c *library) WordKeys() []string {
 	ks := []string{}
-	for k, _ := range c.words {
-
+	for k := range c.words {
 		ks = append(ks, k)
 	}
 	// Keyでソートして返却する.
 	sort.SliceStable(ks, func(i, j int) bool { return ks[i] < ks[j] })
 	return ks
+}
+
+// ライブラリをYAML形式の文字列で取得.
+func (c *library) ToYamlString() string {
+
+	// YAMLを出力するための構造体を生成
+	libraryFile := model.YamlLibraryFile{}
+
+	// 登録されているWordを全て処理
+	for _, word := range c.WordKeys() {
+		yamlConvert := new(model.YamlConvert)
+		// 変換後文字列解決
+		converted, _ := c.ResolveWord(word)
+		yamlConvert.Converted = converted
+		// TODO：現状固定…
+		yamlConvert.Locale = "en"
+		yamlConverts := []model.YamlConvert{}
+		yamlConverts = append(yamlConverts, *yamlConvert)
+		yamlWord := new(model.YamlWord)
+		yamlWord.Converteds = yamlConverts
+		yamlWord.Word = word
+		libraryFile.Words = append(libraryFile.Words, *yamlWord)
+	}
+
+	d, _ := yaml.Marshal(&libraryFile)
+	result := string(d)
+	return result
+}
+
+// ライブラリをYAML形式のByte配列で取得.
+func (c *library) ToYamlBytes() []byte {
+
+	// YAMLを出力するための構造体を生成
+	libraryFile := model.YamlLibraryFile{}
+
+	// 登録されているWordを全て処理
+	for _, word := range c.WordKeys() {
+		yamlConvert := new(model.YamlConvert)
+		// 変換後文字列解決
+		converted, _ := c.ResolveWord(word)
+		yamlConvert.Converted = converted
+		// TODO：現状固定…
+		yamlConvert.Locale = "en"
+		yamlConverts := []model.YamlConvert{}
+		yamlConverts = append(yamlConverts, *yamlConvert)
+		yamlWord := new(model.YamlWord)
+		yamlWord.Converteds = yamlConverts
+		yamlWord.Word = word
+		libraryFile.Words = append(libraryFile.Words, *yamlWord)
+	}
+
+	d, _ := yaml.Marshal(&libraryFile)
+	return d
+}
+
+// 指定されたライブラリをロードする.
+func (c *library) Load(filePath string) {
+
+	logger, err := zap.NewProduction()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	logger.Info("start library load.")
+
+	// YAMLを読み込むための構造体を生成
+	libraryFile := model.YamlLibraryFile{}
+
+	// ファイル読み込み
+	b, _ := os.ReadFile(filePath)
+	yaml.Unmarshal(b, &libraryFile)
+
+	// 保持するためのライブラリを生成
+	library := GetLibrary()
+	renewLibrary()
+
+	// ライブラリへ読み込んだ情報を登録
+	for _, v := range libraryFile.Words {
+		library.RegistWord(v.Word, v.Converteds[0].Converted)
+		logger.Info("word : " + v.Word + " converted : " + v.Converteds[0].Converted)
+	}
+	logger.Info("end library load.")
 }
 
 /* ------------------------------------------------ */
@@ -87,20 +176,11 @@ func Init() {
 
 	logger.Info("start library initialize.")
 
-	// YAMLを読み込むための構造体を生成
-	libraryFile := model.YamlLibraryFile{}
-
-	// ファイル読み込み（TODO：環境変数対応）
-	b, _ := os.ReadFile("./library.yaml")
-	yaml.Unmarshal(b, &libraryFile)
-
-	// 保持するためのライブラリを生成
+	// ライブラリを生成
 	library := GetLibrary()
 
-	// ライブラリへ読み込んだ情報を登録
-	for _, v := range libraryFile.Words {
-		library.RegistWord(v.Word, v.Converteds[0].Converted)
-		logger.Info("word : " + v.Word + " converted : " + v.Converteds[0].Converted)
-	}
+	// ロード
+	library.Load("./library.yaml")
+
 	logger.Info("end library initialize.")
 }

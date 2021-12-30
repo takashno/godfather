@@ -15,11 +15,6 @@ func (LibraryService) LibraryList(request *model.LibraryListRequest) (model.Libr
 
 	library := library.GetLibrary()
 
-	// logger, err := zap.NewProduction()
-	// if err != nil {
-	// 	log.Fatal(err.Error())
-	// }
-
 	// 返却モデル
 	response := new(model.LibraryListRespose)
 
@@ -107,4 +102,26 @@ func (LibraryService) RegistWords(request *model.RegistWordsRequest) (model.Regi
 
 	return *registWordsRespose, nil
 
+}
+
+func (LibraryService) DownloadLibrary(request *model.DownloadLibraryRequest) (model.DownloadLibraryRespose, error) {
+	downloadLibraryResponse := new(model.DownloadLibraryRespose)
+	// ファイルを直接見ても新たに登録されたワードは見れないからオンメモのライブラリから直接取得するように修正
+	// contents, err := os.ReadFile("./library.yaml")
+	// if err != nil {
+	// 	return *downloadLibraryResponse, err
+	// }
+	// downloadLibraryResponse.Contents = contents
+	library := library.GetLibrary()
+	contents := library.ToYamlBytes()
+	downloadLibraryResponse.Contents = contents
+	return *downloadLibraryResponse, nil
+}
+
+func (LibraryService) UploadLibrary(filePath string) (model.UploadResult, error) {
+	library := library.GetLibrary()
+	uploadResponse := new(model.UploadResult)
+	library.Load(filePath)
+	uploadResponse.Status = "success"
+	return *uploadResponse, nil
 }

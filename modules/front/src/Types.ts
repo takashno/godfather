@@ -28,6 +28,10 @@ export interface Naming {
     results: NamingResult[];
 }
 
+export interface LibraryUploadResult {
+    status: string;
+}
+
 /**
  * ページネーション.
  */
@@ -62,6 +66,11 @@ export interface RegistedWords {
     results: RegistWordsResult;
 }
 
+export interface LibraryUpload {
+    result: LibraryUploadResult;
+}
+
+
 export interface LibraryRegistrationRequest {
     words: Word[];
 }
@@ -78,6 +87,10 @@ export interface LibraryRegistration {
     results: LibraryRegistrationResult[];
 }
 
+export interface LibraryUpload {
+    result: LibraryUploadResult
+}
+
 export interface Setting {
     caseSetting: SettingObj;
 }
@@ -89,19 +102,27 @@ export interface Godfahter {
     naming: Naming;
     registedWords: RegistedWords;
     libraryRegistration: LibraryRegistration;
+    libraryUpload: LibraryUpload;
     setting: Setting;
 }
 
-export const REGIST_WORDS: 'REGIST_WORDS' = 'REGIST_WORDS';
+export const LIBRARY_ACTION_TYPES = {
+    LIBRARY_INIT: 'LIBRARY_INIT',
+    REGIST_WORDS: 'REGIST_WORDS'
+}
 export const NAMING: 'NAMING' = 'NAMING';
 export const SETTING: 'SETTING' = 'SETTING';
 export const LIBRARY_REGISTRATION_ACTION_TYPES = {
     INIT: "LIBRARY_REGISTRATION_INIT",
     REGISTRATION: 'LIBRARY_REGISTRATION'
 }
+export const LIBRARY_UPLOAD_ACTION_TYPES = {
+    INIT: "UPLOAD_LIBRARY_INIT",
+    UPLOAD: 'UPLOAD_LIBRARY'
+}
 
 export interface RegistWordsAction extends Action {
-    type: typeof REGIST_WORDS;
+    type: string;
     payload: {
         criteria: Criteria;
         results: RegistWordsResult;
@@ -124,4 +145,9 @@ export interface SettingAction extends Action {
 export interface LibraryRegistrationAction extends Action {
     type: String;
     payload: LibraryRegistration;
+}
+
+export interface LibraryUploadAction extends Action {
+    type: string;
+    payload: LibraryUpload;
 }
