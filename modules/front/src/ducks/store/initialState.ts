@@ -63,6 +63,11 @@ const initialState: Godfahter = {
             converted: "変換後ワード"
         }*/]
     },
+    libraryUpload: {
+        result: {
+            status: ""
+        }
+    },
     setting: {
         caseSetting: {
             lowerCamelCase: true,

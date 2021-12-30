@@ -118,7 +118,10 @@ func (LibraryService) DownloadLibrary(request *model.DownloadLibraryRequest) (mo
 	return *downloadLibraryResponse, nil
 }
 
-func (LibraryService) UploadLibrary(filePath string) {
+func (LibraryService) UploadLibrary(filePath string) (model.UploadResult, error) {
 	library := library.GetLibrary()
+	uploadResponse := new(model.UploadResult)
 	library.Load(filePath)
+	uploadResponse.Status = "success"
+	return *uploadResponse, nil
 }

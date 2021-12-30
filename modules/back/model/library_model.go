@@ -37,6 +37,10 @@ type WordRegistResult struct {
 	FailureReason string `json:"failureReason"`
 }
 
+type UploadResult struct {
+	Status string `json:"status"`
+}
+
 type YamlConvert struct {
 	Locale    string `yaml:"locale"`
 	Converted string `yaml:"converted"`

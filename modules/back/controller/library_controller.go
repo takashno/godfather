@@ -100,9 +100,7 @@ func (pc LibraryController) UploadLibrary(c *gin.Context) {
 	}
 
 	libraryService := service.LibraryService{}
-	libraryService.UploadLibrary(filePath)
+	response, err := libraryService.UploadLibrary(filePath)
 
-	c.JSON(http.StatusOK, gin.H{
-		"status": "ok",
-	})
+	c.JSON(http.StatusOK, response)
 }
