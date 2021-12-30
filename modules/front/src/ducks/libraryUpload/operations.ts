@@ -5,6 +5,11 @@ import { Action } from 'redux'
 import { backendHost } from '../utils/envUtils'
 import { libraryUploadAction } from './actions'
 
+/**
+ * 辞書アップロードOperations.
+ * @param fileInput 
+ * @returns 
+ */
 export const libraryUploadOperation = (fileInput: React.RefObject<HTMLInputElement>) => {
     return async (dispatch: Dispatch<Action>, getState: () => Godfahter) => {
         const submitData = new FormData()
@@ -20,7 +25,6 @@ export const libraryUploadOperation = (fileInput: React.RefObject<HTMLInputEleme
                     },
                 });
             console.log('library upload end.');
-            console.log(response.data);
             dispatch(libraryUploadAction(response.data));
         }
     }

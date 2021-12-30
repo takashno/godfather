@@ -3,7 +3,9 @@ import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { registedWordsOperation } from '../../ducks/library/operations'
+import { libraryUploadInitAction } from '../../ducks/libraryUpload/actions';
 import { libraryUploadOperation } from '../../ducks/libraryUpload/operations';
+import initialState from '../../ducks/store/initialState';
 import { backendHost } from '../../ducks/utils/envUtils';
 import { Godfahter, Pagination, RegistedWords } from '../../Types';
 import Header from '../organisms/Header'
@@ -18,11 +20,12 @@ const Library = () => {
     const fileInput: React.RefObject<HTMLInputElement> = React.createRef()
 
     useLayoutEffect(() => {
+        // 画面遷移時にアップロードのStateの初期化する
+        dispatch(libraryUploadInitAction(initialState.libraryUpload.result));
         // 画面遷移時に入力をクリアする
         dispatch(registedWordsOperation(10, 1));
         return () => {
-            // console.log("Unmount....");
-            // document.querySelector('#modal-library-registration')?.remove();
+            // Nothing...
         }
     }, []);
 
@@ -43,21 +46,7 @@ const Library = () => {
      * @param event 
      */
     const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("event!!!! upload.")
         event.preventDefault()
-        //const submitData = new FormData()
-        //submitData.append("formData", JSON.stringify(formData))
-        // if (fileInput !== null 
-        //     && fileInput.current !== null 
-        //     && fileInput.current.files != null) {
-        //     submitData.append("library", fileInput.current.files[0])
-        //     axios.post(backendHost() + `/library/upload`, submitData,
-        //         {
-        //             headers: {
-        //                 'content-type': 'multipart/form-data',
-        //             },
-        //         })
-        // }
         await dispatch(libraryUploadOperation(fileInput));
         // 最新の辞書の1ページ目を表示する
         await dispatch(registedWordsOperation(10, 1));
@@ -65,12 +54,13 @@ const Library = () => {
 
     const paginationEffect = (page: number, event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
+        // アップロードの次点アクションがページネーションによる遷移の場合があるのでStateを初期化する
+        dispatch(libraryUploadInitAction(initialState.libraryUpload.result));
         dispatch(registedWordsOperation(10, page));
     };
 
     // Upload結果メッセージ
     const uploadMessage = () => {
-        console.log(selector.libraryUpload.result);
         if (selector.libraryUpload.result.status) {
             if (selector.libraryUpload.result.status === 'success') {
                 return (
@@ -189,7 +179,7 @@ const Library = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <ul className="uk-pagination uk-flex-center" uk-margin>
+                        <ul className="uk-pagination uk-flex-center">
                             {renderPaginationLi()}
                         </ul>
                     </div>
