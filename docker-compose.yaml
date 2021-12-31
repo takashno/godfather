@@ -1,0 +1,17 @@
+version: "3"
+services:
+  # ---------------------------------------
+  # Nginx
+  # ---------------------------------------
+  nginx:
+    image: takashno/godfahter
+    ports:
+      - 80:80
+    # environment:
+    #   FRONT_DOMAIN: "xxx.xxx.xxx.xxx"
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
